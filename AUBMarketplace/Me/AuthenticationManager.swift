@@ -12,7 +12,7 @@ class AuthenticationManager {
     var delegate: AuthenticationManagerDelegate?
     
     func authenticate(email: String, password: String) {
-        let urlString = "http://localhost:5000/api/auth"
+        let urlString = "\(K.url)/api/auth"
         let json = [
             "email": email,
             "password": password

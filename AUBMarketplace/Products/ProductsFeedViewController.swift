@@ -25,7 +25,8 @@ class ProductsFeedViewController: UIViewController {
         configureNavBar()
         configureHierarchy()
         configureDataSource()
-        fetchProducts()
+        //turned off for now and replaced with placeholder data
+//        fetchProducts()
     }
     
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nR4-jm-T7L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nR4-jm-T7L">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,12 +24,32 @@
             </objects>
             <point key="canvasLocation" x="2533.3333333333335" y="81.696428571428569"/>
         </scene>
+        <!--Signup View Controller-->
+        <scene sceneID="CQb-KT-gwZ">
+            <objects>
+                <viewController id="9iI-t5-hrw" customClass="SignupViewController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="r2I-ce-3rJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="jE1-zD-zcj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iRS-NX-oZZ"/>
+                    <connections>
+                        <segue destination="mws-V7-l81" kind="show" identifier="createAccount" id="E47-T2-lsu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BQ3-gW-grg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-465" y="82"/>
+        </scene>
         <!--Products-->
         <scene sceneID="tOK-KC-0p2">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b7b-TN-JMt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Products" image="cart.fill" catalog="system" selectedImage="cart.fill" id="dMl-Pf-F5k"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="vH4-Pt-vIT"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Uds-md-t9U">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -43,10 +63,10 @@
             </objects>
             <point key="canvasLocation" x="1623.1884057971015" y="81.696428571428569"/>
         </scene>
-        <!--Login View Controller-->
+        <!--Signin View Controller-->
         <scene sceneID="vIe-AK-4eP">
             <objects>
-                <viewController id="Jfg-cj-fE4" customClass="LoginViewController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Jfg-cj-fE4" customClass="SigninViewController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HKY-Mp-x1z">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,11 +76,12 @@
                     <navigationItem key="navigationItem" id="0bp-Kx-cJF"/>
                     <connections>
                         <segue destination="mws-V7-l81" kind="show" identifier="authenticate" id="sDL-L4-Mao"/>
+                        <segue destination="9iI-t5-hrw" kind="show" identifier="signup" id="WGe-rN-vUW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rsf-Tq-5fV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-342.02898550724638" y="456.69642857142856"/>
+            <point key="canvasLocation" x="-465" y="803"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="VaH-g8-d4G">
@@ -114,9 +135,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0G-TR-fum" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1252.1739130434783" y="456.69642857142856"/>
+            <point key="canvasLocation" x="-1475" y="457"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="E47-T2-lsu"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="cart.fill" catalog="system" width="128" height="102"/>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>

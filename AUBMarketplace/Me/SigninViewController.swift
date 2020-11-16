@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  SigninViewController.swift
 //  AUBMarketplace
 //
 //  Created by Omar Khodr on 11/7/20.
@@ -7,13 +7,14 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class SigninViewController: UIViewController {
     
     let welcomeLabel = UILabel()
-    let emailTextField = UITextField()
-    let passwordTextField = UITextField()
+    let dontLabel = UILabel()
+    let emailTextField = CustomTextField()
+    let passwordTextField = CustomTextField()
     let signInButton = UIButton()
-//    let createAccountButton = UIButton()
+    let createAccountButton = UIButton()
     
     let authenticator = AuthenticationManager()
     let defaults = UserDefaults.standard
@@ -29,26 +30,26 @@ class LoginViewController: UIViewController {
 }
 
 //MARK: - View setup methods
-extension LoginViewController {
+extension SigninViewController {
     
     func setupViews() {
         
         welcomeLabel.text = "Welcome to AUBMarketplace!"
-        welcomeLabel.font = .systemFont(ofSize: 40, weight: .bold)
+        welcomeLabel.font = .preferredFont(forTextStyle: .largeTitle)
+        welcomeLabel.adjustsFontForContentSizeCategory = true
         welcomeLabel.numberOfLines = 0
         welcomeLabel.textAlignment = .center
         
-        emailTextField.borderStyle = .roundedRect
         emailTextField.placeholder = "Email"
-        emailTextField.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9803921569, blue: 0.9843137255, alpha: 1)
         emailTextField.textContentType = .emailAddress
+        emailTextField.keyboardType = .emailAddress
         emailTextField.autocapitalizationType = .none
         
-        passwordTextField.borderStyle = .roundedRect
         passwordTextField.placeholder = "Password"
-        passwordTextField.backgroundColor = #colorLiteral(red: 0.9764705882, green: 0.9803921569, blue: 0.9843137255, alpha: 1)
         passwordTextField.textContentType = .password
         passwordTextField.autocapitalizationType = .none
+        #warning("TODO: passwordTextField.passwordRules")
+        passwordTextField.isSecureTextEntry = true
         
         //TESTING
         emailTextField.text = "ohk04@mail.aub.edu"
@@ -60,11 +61,18 @@ extension LoginViewController {
         signInButton.rounded(cornerRadius: 8)
         
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        signInButton.startAnimatingPressActions()
+        
+        createAccountButton.setTitle("Create Account", for: .normal)
+        createAccountButton.setTitleColor(.label, for: .normal)
+        createAccountButton.titleLabel?.font = .boldSystemFont(ofSize: 18)
+        
+        createAccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside)
         
     }
     
     func setupLayout() {
-        let stackView = UIStackView(arrangedSubviews: [welcomeLabel, emailTextField, passwordTextField, signInButton])
+        let stackView = UIStackView(arrangedSubviews: [welcomeLabel, emailTextField, passwordTextField, signInButton, createAccountButton])
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 15
@@ -104,22 +112,30 @@ extension LoginViewController {
 
 
 //MARK: - Action Methods
-extension LoginViewController {
+extension SigninViewController {
     
-    @objc func didTapSignIn() {
-        if let userEmail = emailTextField.text, let userPassword = passwordTextField.text {
-            authenticator.authenticate(email: userEmail, password: userPassword)
-        } else {
-            print("Email or password fields not filled!")
-        }
-        
+    //networking version
+//    @objc func didTapSignIn() {
+//        if let userEmail = emailTextField.text, let userPassword = passwordTextField.text {
+//            authenticator.authenticate(email: userEmail, password: userPassword)
+//        } else {
+//            print("Email or password fields not filled!")
+//        }
+//    }
+    
+    @objc private func didTapSignIn() {
+        self.performSegue(withIdentifier: "authenticate", sender: self)
+    }
+    
+    @objc private func didTapCreateAccount() {
+        self.performSegue(withIdentifier: "signup", sender: self)
     }
     
 }
 
 
 //MARK: - AuthenticationManagerDelegate Methods
-extension LoginViewController: AuthenticationManagerDelegate {
+extension SigninViewController: AuthenticationManagerDelegate {
     func didFailAuthenticationWithError(_ manager: AuthenticationManager, error: Error) {
         print(error)
     }

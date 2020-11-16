@@ -14,19 +14,19 @@ class ProductManager {
     
     func fetchRecommended() {
         let tokenString = defaults.string(forKey: "token")!
-        let url = "http://localhost:5000/api/posts/product/recommended"
+        let url = "\(K.url)/api/posts/product/recommended"
         performRequest(with: url, token: tokenString, type: .foryou)
     }
     
     func fetchHottest() {
         let tokenString = defaults.string(forKey: "token")!
-        let url = "http://localhost:5000/api/posts/product/hottest"
+        let url = "\(K.url)/api/posts/product/hottest"
         performRequest(with: url, token: tokenString, type: .hottest)
     }
     
     func fetchRecentlyViewed() {
         let tokenString = defaults.string(forKey: "token")!
-        let url = "http://localhost:5000/api/posts/product/latest"
+        let url = "\(K.url)/api/posts/product/latest"
         performRequest(with: url, token: tokenString, type: .recent)
     }
     
@@ -57,7 +57,6 @@ class ProductManager {
                         default:
                             self.delegate?.didFetchRecentProducts(self, products: products)
                         }
-                        
                     }
                     
                 }

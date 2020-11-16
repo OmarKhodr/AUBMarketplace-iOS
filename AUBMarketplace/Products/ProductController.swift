@@ -10,8 +10,8 @@ import Foundation
 class ProductController {
     
     init() {
-//        generateCollections()
-        generateCategories()
+        generateCollections()
+//        generateCategories()
     }
     var collections =  [ProductCollection]()
     
