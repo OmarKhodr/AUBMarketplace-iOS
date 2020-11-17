@@ -20,6 +20,9 @@ class ProductController {
 extension ProductController {
     func generateCollections() {
         collections = [
+            ProductCollection(title: "Title", sectionType: .title, products: [
+                Product(title: "Products", category: "")
+            ]),
             ProductCollection(title: "For You", sectionType: .foryou, products: [
                 Product(title: "Dive Into Design Patterns - Alexander Shvets", category: "Books"),
                 Product(title: "Casio fx-991EX (Scientific)", category: "Supplies"),

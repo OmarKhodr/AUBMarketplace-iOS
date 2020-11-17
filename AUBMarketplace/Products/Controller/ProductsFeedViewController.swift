@@ -23,7 +23,8 @@ class ProductsFeedViewController: UIViewController {
         super.viewDidLoad()
         
         configureNavBar()
-        configureHierarchy()
+        configureViews()
+        configureConstraints()
         configureDataSource()
         //turned off for now and replaced with placeholder data
 //        fetchProducts()
@@ -35,14 +36,22 @@ class ProductsFeedViewController: UIViewController {
 extension ProductsFeedViewController {
     private func configureNavBar() {
         navigationItem.title = "Products"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.isHidden = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    private func configureHierarchy() {
+    private func configureViews() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .systemBackground
+        
+        
+    }
+    
+    private func configureConstraints() {
+        
         view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -60,10 +69,12 @@ extension ProductsFeedViewController {
             let collection = self.productController.collections[sectionIndex]
             
             switch collection.sectionType {
-                case .categories:
-                    return self.createSmallTableSection(layoutEnvironment: layoutEnvironment)
-                default:
-                    return self.createProductSection(layoutEnvironment: layoutEnvironment)
+            case .title:
+                return self.createTitleSection()
+            case .categories:
+                return self.createSmallTableSection()
+            default:
+                return self.createProductSection(layoutEnvironment: layoutEnvironment)
             }
             
             
@@ -73,6 +84,22 @@ extension ProductsFeedViewController {
         config.interSectionSpacing = 20
         layout.configuration = config
         return layout
+    }
+    
+    private func createTitleSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(70))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPagingCentered
+        
+        return section
     }
     
     private func createProductSection(layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -100,7 +127,7 @@ extension ProductsFeedViewController {
         return section
     }
     
-    private func createSmallTableSection(layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
+    private func createSmallTableSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(0.2))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -138,6 +165,7 @@ extension ProductsFeedViewController {
     }
     
     private func registerCells() {
+        collectionView.register(TitleView.self, forCellWithReuseIdentifier: TitleView.reuseIdentifier)
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: ProductsFeedViewController.titleElementKind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
         collectionView.register(SmallTableCell.self, forCellWithReuseIdentifier: SmallTableCell.reuseIdentifier)
@@ -161,6 +189,8 @@ extension ProductsFeedViewController {
         
         dataSource = UICollectionViewDiffableDataSource<ProductCollection, Product>(collectionView: collectionView) { collectionView, indexPath, product in
             switch self.productController.collections[indexPath.section].sectionType {
+            case .title:
+                return self.configure(TitleView.self, with: product, for: indexPath)
             case .categories:
                 return self.configure(SmallTableCell.self, with: product, for: indexPath)
             default:
@@ -179,56 +209,12 @@ extension ProductsFeedViewController {
                 let productCategory = snapshot.sectionIdentifiers[indexPath.section]
                 supplementaryView.label.text = productCategory.title
             }
-            
             return supplementaryView
         }
         
         reloadData()
     }
     
-    private func temp() {
-        registerCells()
-        
-        let cellRegistration = UICollectionView.CellRegistration
-        <ProductCell, Product> { (cell, indexPath, product) in
-            // Populate the cell with our item description.
-            cell.titleLabel.text = product.title
-            cell.categoryLabel.text = product.category
-        }
-        
-        dataSource = UICollectionViewDiffableDataSource
-        <ProductCollection, Product>(collectionView: collectionView, cellProvider: {
-            (collectionView: UICollectionView, indexPath: IndexPath, product: Product) -> UICollectionViewCell? in
-            // Return the cell.
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: product)
-        })
-        
-        let supplementaryRegistration = UICollectionView.SupplementaryRegistration
-        <TitleSupplementaryView>(elementKind: "Header") {
-            (supplementaryView, string, indexPath) in
-            // Populate the view with our section's description.
-            if let snapshot = self.currentSnapshot {
-                // Populate the view with our section's description.
-                let productCategory = snapshot.sectionIdentifiers[indexPath.section]
-                supplementaryView.label.text = productCategory.title
-            }
-        }
-        
-        dataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: index)
-        }
-        
-        currentSnapshot = NSDiffableDataSourceSnapshot
-            <ProductCollection, Product>()
-        
-        productController.collections.forEach {
-            let collection = $0
-            currentSnapshot.appendSections([collection])
-            currentSnapshot.appendItems(collection.products)
-        }
-        
-        dataSource.apply(currentSnapshot, animatingDifferences: false)
-    }
 }
 
 extension ProductsFeedViewController: ProductManagerDelegate {

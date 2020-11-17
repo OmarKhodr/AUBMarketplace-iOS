@@ -14,8 +14,7 @@ class CustomTextField: UITextField {
         
         borderStyle = .roundedRect
         backgroundColor = .systemGray6
-        layer.cornerRadius = 8.0
-        layer.masksToBounds = true
+        rounded(cornerRadius: 8.0)
         layer.borderWidth = 1
         layer.borderColor = UIColor.systemGray6.cgColor
         
