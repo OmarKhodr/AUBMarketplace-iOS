@@ -19,10 +19,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="IAS-He-saa"/>
+                    <connections>
+                        <segue destination="PAo-go-QSR" kind="show" identifier="detail" id="IrU-gr-XFL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2533.3333333333335" y="81.696428571428569"/>
+        </scene>
+        <!--Test View Controller-->
+        <scene sceneID="bFg-Wi-nwb">
+            <objects>
+                <viewController storyboardIdentifier="Test" id="PAo-go-QSR" customClass="TestViewController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9dq-pg-xfr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="WBV-nW-J2K"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Gt2-fT-c31"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="21h-wb-gac" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3442" y="82"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="CQb-KT-gwZ">

@@ -26,6 +26,7 @@ class ProductsFeedViewController: UIViewController {
         configureViews()
         configureConstraints()
         configureDataSource()
+        configureDelegate()
         //turned off for now and replaced with placeholder data
 //        fetchProducts()
     }
@@ -44,7 +45,11 @@ extension ProductsFeedViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .systemBackground
         
+        collectionView.delaysContentTouches = false
         
+        for case let scrollView as UIScrollView in collectionView.subviews {
+            scrollView.delaysContentTouches = false
+        }
     }
     
     private func configureConstraints() {
@@ -55,7 +60,7 @@ extension ProductsFeedViewController {
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
     }
@@ -93,7 +98,7 @@ extension ProductsFeedViewController {
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(70))
+                                               heightDimension: .estimated(90))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
@@ -251,7 +256,17 @@ extension ProductsFeedViewController: ProductManagerDelegate {
         }
     }
     
+}
+
+extension ProductsFeedViewController: UICollectionViewDelegate {
+    private func configureDelegate() {
+        collectionView.delegate = self
+    }
     
-    
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let product = dataSource.itemIdentifier(for: indexPath)!
+        let detailVC = ProductDetailViewController()
+        detailVC.product = product
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }

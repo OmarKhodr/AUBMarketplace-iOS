@@ -16,8 +16,9 @@ class SmallTableCell: UICollectionViewCell, SelfConfiguringProductCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        name.font = UIFont.preferredFont(forTextStyle: .title2)
         name.textColor = .label
+        name.font = UIFont.preferredFont(forTextStyle: .title2)
+        name.adjustsFontForContentSizeCategory = true
         
         imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(equalToConstant: 25).isActive = true

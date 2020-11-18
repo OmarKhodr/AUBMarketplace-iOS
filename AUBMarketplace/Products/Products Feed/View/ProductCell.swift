@@ -74,13 +74,13 @@ extension ProductCell {
         addSubview(titleLabel)
         addSubview(categoryLabel)
 
-        titleLabel.font = .preferredFont(forTextStyle: .body)
         titleLabel.textColor = .label
+        titleLabel.font = .preferredFont(forTextStyle: .body)
         titleLabel.adjustsFontForContentSizeCategory = true
 
+        categoryLabel.textColor = .secondaryLabel
         categoryLabel.font = .preferredFont(forTextStyle: .body)
         categoryLabel.adjustsFontForContentSizeCategory = true
-        categoryLabel.textColor = .secondaryLabel
 
         imageView.layer.borderColor = UIColor.systemGray5.cgColor
         imageView.layer.borderWidth = 1
