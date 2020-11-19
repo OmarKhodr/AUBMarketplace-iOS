@@ -35,17 +35,18 @@ extension SigninViewController {
     func setupViews() {
         
         welcomeLabel.text = "Welcome to AUBMarketplace!"
-        welcomeLabel.font = .preferredFont(forTextStyle: .largeTitle)
-        welcomeLabel.adjustsFontForContentSizeCategory = true
+        welcomeLabel.setDynamicFont(forTextStyle: .largeTitle, weight: .bold)
         welcomeLabel.numberOfLines = 0
         welcomeLabel.textAlignment = .center
         
         emailTextField.placeholder = "Email"
+        emailTextField.textColor = .label
         emailTextField.textContentType = .emailAddress
         emailTextField.keyboardType = .emailAddress
         emailTextField.autocapitalizationType = .none
         
         passwordTextField.placeholder = "Password"
+        passwordTextField.textColor = .label
         passwordTextField.textContentType = .password
         passwordTextField.autocapitalizationType = .none
         #warning("TODO: passwordTextField.passwordRules")

@@ -15,7 +15,7 @@ class TestViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
-        let large = LargeProductView(with: product)
+        let large = ProductLargeView(with: product)
         view.addSubview(large)
         large.translatesAutoresizingMaskIntoConstraints = false
 

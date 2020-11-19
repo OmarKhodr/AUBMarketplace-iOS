@@ -42,7 +42,7 @@
 		23FD22DB2563DD3300E8D8A1 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD22DA2563DD3300E8D8A1 /* SearchFieldView.swift */; };
 		23FD22DE2563E8E400E8D8A1 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD22DD2563E8E400E8D8A1 /* TitleView.swift */; };
 		23FD22FA256456A600E8D8A1 /* ProductDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD22F9256456A600E8D8A1 /* ProductDetailViewController.swift */; };
-		23FD230225645CCC00E8D8A1 /* LargeProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD230125645CCC00E8D8A1 /* LargeProductView.swift */; };
+		23FD230225645CCC00E8D8A1 /* ProductLargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD230125645CCC00E8D8A1 /* ProductLargeView.swift */; };
 		23FD23052564681C00E8D8A1 /* UILabel+DynamicFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD23042564681C00E8D8A1 /* UILabel+DynamicFont.swift */; };
 		23FD23082564720F00E8D8A1 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD23072564720F00E8D8A1 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
@@ -85,7 +85,7 @@
 		23FD22DA2563DD3300E8D8A1 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
 		23FD22DD2563E8E400E8D8A1 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		23FD22F9256456A600E8D8A1 /* ProductDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewController.swift; sourceTree = "<group>"; };
-		23FD230125645CCC00E8D8A1 /* LargeProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeProductView.swift; sourceTree = "<group>"; };
+		23FD230125645CCC00E8D8A1 /* ProductLargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLargeView.swift; sourceTree = "<group>"; };
 		23FD23042564681C00E8D8A1 /* UILabel+DynamicFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+DynamicFont.swift"; sourceTree = "<group>"; };
 		23FD23072564720F00E8D8A1 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,7 +147,7 @@
 		23F9EFED256554ED002F3962 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				23FD230125645CCC00E8D8A1 /* LargeProductView.swift */,
+				23FD230125645CCC00E8D8A1 /* ProductLargeView.swift */,
 				23F9EFF025655644002F3962 /* ProductDescriptionView.swift */,
 			);
 			path = View;
@@ -402,7 +402,7 @@
 				23FA56CA2556ED5C00B009EA /* SigninViewController.swift in Sources */,
 				233BA44625629E130072ED0B /* SignupView.swift in Sources */,
 				230CE748255C8D770013C430 /* ProductCollection.swift in Sources */,
-				23FD230225645CCC00E8D8A1 /* LargeProductView.swift in Sources */,
+				23FD230225645CCC00E8D8A1 /* ProductLargeView.swift in Sources */,
 				23F9EFE725652E8E002F3962 /* Button.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

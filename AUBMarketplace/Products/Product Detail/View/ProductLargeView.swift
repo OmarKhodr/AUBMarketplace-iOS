@@ -1,5 +1,5 @@
 //
-//  LargeProductView.swift
+//  ProductLargeView.swift
 //  AUBMarketplace
 //
 //  Created by Omar Khodr on 11/17/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LargeProductView: UIView {
+class ProductLargeView: UIView {
 
     let imageView = UIImageView()
     let nameLabel = UILabel()
@@ -32,17 +32,20 @@ class LargeProductView: UIView {
     
 }
 
-extension LargeProductView {
+//MARK: - View and Constraint Setup
+extension ProductLargeView {
     private func setupViews() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "bookcover")
         imageView.contentMode = .scaleAspectFit
+        // Add drop shadow
         imageView.layer.shadowColor = UIColor.label.cgColor
         imageView.layer.shadowOpacity = 0.65
         imageView.layer.shadowOffset = CGSize(width: 0.0, height: 7.0)
         imageView.layer.shadowRadius = 20
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        // custom extension to set dynamic font with weight
         nameLabel.setDynamicFont(forTextStyle: .title3, weight: .bold)
         nameLabel.textColor = .label
         nameLabel.numberOfLines = 0
@@ -84,13 +87,14 @@ extension LargeProductView {
         wishlistButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let buttonsView = UIView()
+        
         let buttonStackView = UIStackView(arrangedSubviews: [buyButton, wishlistButton])
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.axis = .vertical
         buttonStackView.spacing = 10
         buttonStackView.alignment = .fill
         
         buttonsView.addSubview(buttonStackView)
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         
         buttonsView.addSubview(detailButton)
         
@@ -120,7 +124,10 @@ extension LargeProductView {
         
         stackView.fillSuperview()
     }
-    
+}
+
+//MARK: - Data and Action Methods
+extension ProductLargeView {
     private func setupActions() {
         detailButton.startAnimatingPressActions()
         buyButton.startAnimatingPressActions()
