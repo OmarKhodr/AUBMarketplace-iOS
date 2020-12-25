@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "AUB-Logo-833x833.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

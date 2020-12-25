@@ -11,6 +11,7 @@ class ProductsFeedViewController: UIViewController {
     
     let productController = ProductController()
     var collectionView: UICollectionView! = nil
+    let searchController = UISearchController(searchResultsController: nil)
     var dataSource: UICollectionViewDiffableDataSource
         <ProductCollection, Product>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot
@@ -36,9 +37,9 @@ class ProductsFeedViewController: UIViewController {
 //MARK: - View Setup
 extension ProductsFeedViewController {
     private func configureNavBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.searchController = searchController
         navigationItem.title = "Products"
-        navigationController?.navigationBar.isHidden = true
-//        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     private func configureViews() {
@@ -74,8 +75,6 @@ extension ProductsFeedViewController {
             let collection = self.productController.collections[sectionIndex]
             
             switch collection.sectionType {
-            case .title:
-                return self.createTitleSection()
             case .categories:
                 return self.createSmallTableSection()
             default:
@@ -89,22 +88,6 @@ extension ProductsFeedViewController {
         config.interSectionSpacing = 20
         layout.configuration = config
         return layout
-    }
-    
-    private func createTitleSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .estimated(90))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPagingCentered
-        
-        return section
     }
     
     private func createProductSection(layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection {
@@ -170,7 +153,6 @@ extension ProductsFeedViewController {
     }
     
     private func registerCells() {
-        collectionView.register(TitleView.self, forCellWithReuseIdentifier: TitleView.reuseIdentifier)
         collectionView.register(TitleSupplementaryView.self, forSupplementaryViewOfKind: ProductsFeedViewController.titleElementKind, withReuseIdentifier: TitleSupplementaryView.reuseIdentifier)
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
         collectionView.register(SmallTableCell.self, forCellWithReuseIdentifier: SmallTableCell.reuseIdentifier)
@@ -194,8 +176,6 @@ extension ProductsFeedViewController {
         
         dataSource = UICollectionViewDiffableDataSource<ProductCollection, Product>(collectionView: collectionView) { collectionView, indexPath, product in
             switch self.productController.collections[indexPath.section].sectionType {
-            case .title:
-                return self.configure(TitleView.self, with: product, for: indexPath)
             case .categories:
                 return self.configure(SmallTableCell.self, with: product, for: indexPath)
             default:

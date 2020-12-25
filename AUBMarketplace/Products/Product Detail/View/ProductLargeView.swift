@@ -20,10 +20,10 @@ class ProductLargeView: UIView {
     init(with product: Product) {
         super.init(frame: .zero)
         
-        configure(with: product)
         setupViews()
         setupConstraints()
         setupActions()
+        configure(with: product)
     }
     
     required init?(coder: NSCoder) {
@@ -39,10 +39,10 @@ extension ProductLargeView {
         imageView.image = UIImage(named: "bookcover")
         imageView.contentMode = .scaleAspectFit
         // Add drop shadow
-        imageView.layer.shadowColor = UIColor.label.cgColor
-        imageView.layer.shadowOpacity = 0.65
-        imageView.layer.shadowOffset = CGSize(width: 0.0, height: 7.0)
-        imageView.layer.shadowRadius = 20
+        imageView.layer.shadowColor = UIColor.black.cgColor
+        imageView.layer.shadowOpacity = 0.5
+        imageView.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        imageView.layer.shadowRadius = 15
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         // custom extension to set dynamic font with weight
@@ -137,6 +137,16 @@ extension ProductLargeView {
     func configure(with product: Product) {
         nameLabel.text = product.title
         sellerButton.setTitle(product.seller, for: .normal)
-        
+        switch product.status {
+        case .available:
+            let roundedPrice = String(format: "%.2f", product.price)
+            buyButton.setTitle("BUY | $\(roundedPrice)", for: .normal)
+        case .saleInProgress:
+            buyButton.isEnabled = false
+            buyButton.setTitle("SALE IN PROGRESS", for: .disabled)
+        default: // case sold
+            buyButton.isEnabled = false
+            buyButton.setTitle("SOLD", for: .disabled)
+        }
     }
 }

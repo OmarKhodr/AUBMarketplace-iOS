@@ -8,7 +8,6 @@
 import Foundation
 
 enum ProductSectionCategory {
-    case title
     case foryou
     case hottest
     case categories

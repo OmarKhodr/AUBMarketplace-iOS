@@ -47,10 +47,15 @@ class SmallTableCell: UICollectionViewCell, SelfConfiguringProductCell {
         case "Course Notes":
             imageView.image = UIImage(systemName: "note.text")
             imageView.tintColor = .label
-        default:
+        case "Supplies":
             imageView.image = UIImage(systemName: "ruler.fill")
             imageView.tintColor = .label
-            
+        case "Electronics":
+            imageView.image = UIImage(systemName: "desktopcomputer")
+            imageView.tintColor = .label
+        default:
+            imageView.image = UIImage(systemName: "bag.fill")
+            imageView.tintColor = .label
         }
     }
 

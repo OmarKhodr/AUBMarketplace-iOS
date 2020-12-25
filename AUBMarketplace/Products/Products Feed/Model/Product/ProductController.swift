@@ -20,9 +20,6 @@ class ProductController {
 extension ProductController {
     func generateCollections() {
         collections = [
-            ProductCollection(title: "Title", sectionType: .title, products: [
-                Product(title: "Products", category: "")
-            ]),
             ProductCollection(title: "For You", sectionType: .foryou, products: [
                 Product(title: "Dive Into Design Patterns - Alexander Shvets", category: "Books"),
                 Product(title: "Casio fx-991EX (Scientific)", category: "Supplies"),
@@ -38,7 +35,9 @@ extension ProductController {
             ProductCollection(title: "Categories", sectionType: .categories, products: [
                 Product(title: "Books", category: ""),
                 Product(title: "Course Notes", category: ""),
-                Product(title: "Supplies", category: "")
+                Product(title: "Supplies", category: ""),
+                Product(title: "Electronics", category: ""),
+                Product(title: "Others", category: "")
             ]),
             ProductCollection(title: "Recently Viewed", sectionType: .recent, products: [
                 Product(title: "Dive Into Design Patterns - Alexander Shvets", category: "Books"),
@@ -54,7 +53,9 @@ extension ProductController {
             ProductCollection(title: "Categories", sectionType: .categories, products: [
                 Product(title: "Books", category: ""),
                 Product(title: "Course Notes", category: ""),
-                Product(title: "Supplies", category: "")
+                Product(title: "Supplies", category: ""),
+                Product(title: "Electronics", category: ""),
+                Product(title: "Others", category: "")
             ])
         ]
     }
