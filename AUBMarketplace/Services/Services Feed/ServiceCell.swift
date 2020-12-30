@@ -17,7 +17,6 @@ class ServiceCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupViews()
         setupConstraints()
     }
@@ -41,12 +40,12 @@ extension ServiceCell {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.textColor = .label
         titleLabel.numberOfLines = 2
-        titleLabel.setDynamicFont(forTextStyle: .body, weight: .bold)
+        titleLabel.setDynamicFont(forTextStyle: .body, weight: .medium)
         
         requestorLabel.translatesAutoresizingMaskIntoConstraints = false
         requestorLabel.textColor = .label
         requestorLabel.numberOfLines = 1
-        requestorLabel.setDynamicFont(forTextStyle: .body)
+        requestorLabel.setDynamicFont(forTextStyle: .subheadline)
         
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.textColor = .secondaryLabel

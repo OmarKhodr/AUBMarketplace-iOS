@@ -26,6 +26,11 @@ class ServicesFeedViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.title = "Services"
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.deselectedRow(withCoordinator: self.transitionCoordinator)
+    }
 
 }
 

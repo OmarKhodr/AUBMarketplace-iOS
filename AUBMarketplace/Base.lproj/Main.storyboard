@@ -98,7 +98,7 @@
                     <connections>
                         <segue destination="b7b-TN-JMt" kind="relationship" relationship="viewControllers" id="xYk-Bk-8RN"/>
                         <segue destination="viw-wf-bJe" kind="relationship" relationship="viewControllers" id="oql-hc-yxM"/>
-                        <segue destination="dQg-9P-bEz" kind="relationship" relationship="viewControllers" id="gUF-6u-xbG"/>
+                        <segue destination="Ayo-Qx-9kp" kind="relationship" relationship="viewControllers" id="gUF-6u-xbG"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpO-iP-oho" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -121,21 +121,21 @@
             </objects>
             <point key="canvasLocation" x="2531.8840579710145" y="762.72321428571422"/>
         </scene>
-        <!--Me-->
+        <!--Onboarding View Controller-->
         <scene sceneID="BBm-HN-1Y0">
             <objects>
-                <viewController id="dQg-9P-bEz" sceneMemberID="viewController">
+                <viewController id="dQg-9P-bEz" customClass="OnboardingViewController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lDA-LY-eIJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="ouo-gl-xgw"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Me" image="person.crop.circle.fill" catalog="system" selectedImage="person.crop.circle.fill" id="9I2-Au-gNv"/>
+                    <navigationItem key="navigationItem" id="gL5-vL-5mN"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STb-88-G68" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1623" y="1519"/>
+            <point key="canvasLocation" x="2531.8840579710145" y="1518.75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kX3-Vb-1VW">
@@ -173,9 +173,28 @@
             </objects>
             <point key="canvasLocation" x="1621.7391304347827" y="762.72321428571422"/>
         </scene>
+        <!--Me-->
+        <scene sceneID="G8p-BJ-qKA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ayo-Qx-9kp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Me" image="person.crop.circle.fill" catalog="system" selectedImage="person.crop.circle.fill" id="9I2-Au-gNv"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k5i-is-GdP">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dQg-9P-bEz" kind="relationship" relationship="rootViewController" id="1C7-CX-FSl"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G97-PT-MNW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1621.7391304347827" y="1518.75"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="E47-T2-lsu"/>
+        <segue reference="sDL-L4-Mao"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="cart.fill" catalog="system" width="128" height="102"/>
