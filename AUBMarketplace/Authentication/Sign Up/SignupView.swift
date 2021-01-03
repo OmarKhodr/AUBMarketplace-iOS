@@ -27,7 +27,6 @@ class SignupView: UIView {
         backgroundColor = .systemBackground
         setupViews()
         setupConstraints()
-        
     }
     
     required init?(coder: NSCoder) {

@@ -36,7 +36,6 @@ class ProductLargeView: UIView {
 extension ProductLargeView {
     private func setupViews() {
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "bookcover")
         imageView.contentMode = .scaleAspectFit
         // Add drop shadow
         imageView.layer.shadowColor = UIColor.black.cgColor
@@ -135,12 +134,19 @@ extension ProductLargeView {
     }
     
     func configure(with product: Product) {
+        if let firstUrlString = product.imageUrls.first, let firstUrl = NSURL(string: firstUrlString) {
+            ProductImageCache.publicCache.load(url: firstUrl, product: product) { (product, image) in
+                if let image = image {
+                    self.imageView.image = image
+                }
+            }
+        }
+        
         nameLabel.text = product.title
         sellerButton.setTitle(product.seller, for: .normal)
         switch product.status {
         case .available:
-            let roundedPrice = String(format: "%.2f", product.price)
-            buyButton.setTitle("BUY | $\(roundedPrice)", for: .normal)
+            buyButton.setTitle("BUY | \(product.currency)\(product.price!)", for: .normal)
         case .saleInProgress:
             buyButton.isEnabled = false
             buyButton.setTitle("SALE IN PROGRESS", for: .disabled)

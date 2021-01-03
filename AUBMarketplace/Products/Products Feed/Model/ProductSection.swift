@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum ProductSectionCategory {
-    case foryou
-    case hottest
-    case categories
-    case recent
+enum ProductSection: Int {
+    case foryou = 0
+    case hottest = 1
+    case categories = 2
+    case recent = 3
 }

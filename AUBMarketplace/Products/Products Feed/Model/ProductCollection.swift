@@ -10,7 +10,7 @@ import Foundation
 struct ProductCollection: Hashable {
     
     let title: String
-    let sectionType: ProductSectionCategory
+    let sectionType: ProductSection
     let products: [Product]
     
     let identifier = UUID()

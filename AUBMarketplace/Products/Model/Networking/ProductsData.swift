@@ -16,4 +16,9 @@ struct ProductsData: Decodable {
 struct ProductData: Decodable {
     let name: String
     let category: String
+    let description: String
+    let owner: String
+    let images: [String]
+    let price: Int
+    let currency: String
 }

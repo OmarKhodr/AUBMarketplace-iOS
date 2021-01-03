@@ -14,6 +14,8 @@ class SignUpCredentialsViewController: UIViewController {
     
     var credentialsView: SignUpCredentialsView!
     
+    var selectedMajorIndex: Int? = nil
+    
     init(basicUser: BasicUser, userType: UserType) {
         self.basicUser = basicUser
         self.userType = userType
@@ -21,7 +23,7 @@ class SignUpCredentialsViewController: UIViewController {
     }
     
     override func loadView() {
-        view = SignUpCredentialsView(userType: userType)
+        view = SignUpCredentialsView(userType: userType, majorAction: majorAction, continueAction: continueAction)
         view.backgroundColor = .systemBackground
     }
     
@@ -54,6 +56,7 @@ class SignUpCredentialsViewController: UIViewController {
 
 }
 
+//MARK: - UITextField Delegate Methods
 extension SignUpCredentialsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let nextTag = textField.tag + 1
@@ -65,5 +68,30 @@ extension SignUpCredentialsViewController: UITextFieldDelegate {
         }
 
         return true
+    }
+}
+
+//MARK: - Action Setup
+extension SignUpCredentialsViewController {
+    private func majorAction() {
+        let options = [
+            "CSE",
+            "CCE",
+            "ECE",
+            "CS"
+        ]
+        let optionListVC = OptionListViewController(options: options,
+                                                    selectedRow: selectedMajorIndex,
+                                                    callBack: backFromMajorOptions(selectedMajor:selectedIndex:))
+        show(optionListVC, sender: self)
+    }
+    
+    private func backFromMajorOptions(selectedMajor: String?, selectedIndex: Int?) {
+        selectedMajorIndex = selectedIndex
+        credentialsView.majorListButton.chosenOptionLabel.text = selectedMajor == nil ? "None" : selectedMajor
+    }
+    
+    private func continueAction() {
+        print("Continue/Finish tapped!")
     }
 }

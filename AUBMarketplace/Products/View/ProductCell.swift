@@ -29,6 +29,14 @@ class ProductCell: UICollectionViewCell, SelfConfiguringProductCell {
     func configure(with product: Product) {
         titleLabel.text = product.title
         categoryLabel.text = product.category
+        
+        if let firstUrlString = product.imageUrls.first, let firstUrl = NSURL(string: firstUrlString) {
+            ProductImageCache.publicCache.load(url: firstUrl, product: product) { (product, image) in
+                if let image = image {
+                    self.imageView.image = image
+                }
+            }
+        }
     }
     
 }
@@ -82,6 +90,7 @@ extension ProductCell {
         categoryLabel.font = .preferredFont(forTextStyle: .body)
         categoryLabel.adjustsFontForContentSizeCategory = true
 
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.borderColor = UIColor.systemGray5.cgColor
         imageView.layer.borderWidth = 1
         imageView.layer.cornerRadius = 4

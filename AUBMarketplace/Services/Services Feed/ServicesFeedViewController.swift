@@ -10,21 +10,19 @@ import UIKit
 class ServicesFeedViewController: UIViewController {
     
     let tableView = UITableView()
-    let searchController = UISearchController(searchResultsController: nil)
     
-    var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    var services: [Service] = []
     
     override func loadView() {
         super.loadView()
         setupViews()
         setupConstraints()
+        fetchServices()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.searchController = searchController
-        navigationItem.title = "Services"
+        setupNavItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,6 +32,30 @@ class ServicesFeedViewController: UIViewController {
 
 }
 
+//MARK: - Navigation Item Seutp
+extension ServicesFeedViewController {
+    private func setupNavItem() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Services Feed"
+        
+        // Right bar button items
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        addButton.tintColor = .systemGreen
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
+        searchButton.tintColor = .systemGreen
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+    }
+    
+    @objc private func addTapped() {
+        
+    }
+    
+    @objc private func searchTapped() {
+        
+    }
+}
+
+//MARK: - Subviews Setup
 extension ServicesFeedViewController {
     
     private func setupViews() {
@@ -49,6 +71,7 @@ extension ServicesFeedViewController {
     
 }
 
+//MARK: - Constraints Setup
 extension ServicesFeedViewController {
     private func setupConstraints() {
         view.addSubview(tableView)
@@ -56,9 +79,10 @@ extension ServicesFeedViewController {
     }
 }
 
+//MARK: - Data Source Setup
 extension ServicesFeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return array.count
+        return services.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -70,10 +94,22 @@ extension ServicesFeedViewController: UITableViewDataSource {
     
 }
 
+//MARK: - Delegate Setup
 extension ServicesFeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedService = Service() // production: let service = services[indexPath.row]
         let detailVC = ServiceDetailViewController(service: selectedService)
         show(detailVC, sender: self)
+    }
+}
+
+//MARK: - Networking Setup
+extension ServicesFeedViewController {
+    private func fetchServices() {
+        ServiceManager.shared.fetchFeedServices(completion: didFetchServices(services:))
+    }
+    
+    private func didFetchServices(services: [Service]) {
+        
     }
 }

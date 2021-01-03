@@ -11,14 +11,11 @@ class ProductsFeedViewController: UIViewController {
     
     let productController = ProductController()
     var collectionView: UICollectionView! = nil
-    let searchController = UISearchController(searchResultsController: nil)
     var dataSource: UICollectionViewDiffableDataSource
         <ProductCollection, Product>! = nil
     var currentSnapshot: NSDiffableDataSourceSnapshot
         <ProductCollection, Product>! = nil
     static let titleElementKind = "title-element-kind"
-    
-    let productManager = ProductManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +25,7 @@ class ProductsFeedViewController: UIViewController {
         configureConstraints()
         configureDataSource()
         configureDelegate()
-        //turned off for now and replaced with placeholder data
-//        fetchProducts()
+        fetchProducts()
     }
     
 }
@@ -38,8 +34,22 @@ class ProductsFeedViewController: UIViewController {
 extension ProductsFeedViewController {
     private func configureNavBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.searchController = searchController
-        navigationItem.title = "Products"
+        navigationItem.title = "Products Feed"
+        
+        // Right bar button items
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        addButton.tintColor = .systemGreen
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
+        searchButton.tintColor = .systemGreen
+        navigationItem.rightBarButtonItems = [addButton, searchButton]
+    }
+    
+    @objc private func addTapped() {
+        print("Add Tapped!")
+    }
+    
+    @objc private func searchTapped() {
+        print("Search Tapped!")
     }
     
     private func configureViews() {
@@ -54,16 +64,9 @@ extension ProductsFeedViewController {
     }
     
     private func configureConstraints() {
-        
         view.addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
+        collectionView.fillSuperview()
     }
 }
 
@@ -168,7 +171,7 @@ extension ProductsFeedViewController {
             currentSnapshot.appendItems(collection.products)
         }
         
-        dataSource.apply(currentSnapshot, animatingDifferences: false)
+        dataSource.apply(currentSnapshot, animatingDifferences: true)
     }
     
     private func configureDataSource() {
@@ -202,35 +205,37 @@ extension ProductsFeedViewController {
     
 }
 
-extension ProductsFeedViewController: ProductManagerDelegate {
+//MARK: - Networking Setup
+extension ProductsFeedViewController {
     
     private func fetchProducts() {
-        productManager.delegate = self
-        productManager.fetchRecommended()
-        productManager.fetchHottest()
-        productManager.fetchRecentlyViewed()
+        ProductManager.shared.fetchFeedProducts(section: .foryou, completion: insertFetchedProducts(_:section:))
+        ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
+        ProductManager.shared.fetchFeedProducts(section: .recent, completion: insertFetchedProducts(_:section:))
     }
     
-    func didFailWithError(_ manager: ProductManager, error: Error) {
-        print(error)
-    }
-    
-    func didFetchRecommendedProducts(_ manager: ProductManager, products: [Product]) {
-        productController.collections.insert(ProductCollection(title: "For You", sectionType: .foryou, products: products), at: 0)
-        DispatchQueue.main.async {
-            self.reloadData()
+    private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
+        var sectionTitle = ""
+        
+        switch section {
+        case .foryou:
+            sectionTitle = "For You"
+        case .hottest:
+            sectionTitle = "Hottest"
+        case .categories:
+            sectionTitle = "Categories"
+        case .recent:
+            sectionTitle = "Recently Viewed"
         }
-    }
-    
-    func didFetchHottestProducts(_ manager: ProductManager, products: [Product]) {
-        productController.collections.insert(ProductCollection(title: "Hottest", sectionType: .hottest, products: products), at: 1)
-        DispatchQueue.main.async {
-            self.reloadData()
+        
+        let collection = ProductCollection(title: sectionTitle, sectionType: section, products: products)
+        productController.collections.append(collection)
+        
+        // sort array according to the section order
+        productController.collections.sort { (productA, productB) -> Bool in
+            productA.sectionType.rawValue < productB.sectionType.rawValue
         }
-    }
-    
-    func didFetchRecentProducts(_ manager: ProductManager, products: [Product]) {
-        productController.collections.append(ProductCollection(title: "Recently Viewed", sectionType: .recent, products: products))
+        
         DispatchQueue.main.async {
             self.reloadData()
         }
@@ -238,6 +243,7 @@ extension ProductsFeedViewController: ProductManagerDelegate {
     
 }
 
+//MARK: - Colletion View Delegate Setup
 extension ProductsFeedViewController: UICollectionViewDelegate {
     private func configureDelegate() {
         collectionView.delegate = self
@@ -245,8 +251,13 @@ extension ProductsFeedViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = dataSource.itemIdentifier(for: indexPath)!
-        let detailVC = ProductDetailViewController()
-        detailVC.product = product
-        navigationController?.pushViewController(detailVC, animated: true)
+        if product.isCategory {
+            let categoryVC = ProductsListViewController(category: product.title)
+            show(categoryVC, sender: self)
+        } else {
+            let detailVC = ProductDetailViewController()
+            detailVC.product = product
+            show(detailVC, sender: self)
+        }
     }
 }

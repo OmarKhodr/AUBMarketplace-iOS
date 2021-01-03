@@ -83,10 +83,10 @@
             </objects>
             <point key="canvasLocation" x="-465" y="803"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="VaH-g8-d4G">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="mws-V7-l81" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="mws-V7-l81" customClass="MainTabBarController" customModule="AUBMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="vlL-kL-N6d"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Xl0-jA-IiB">

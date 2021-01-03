@@ -34,30 +34,18 @@ class SignUpBasicInfoView: UIView {
 extension SignUpBasicInfoView {
     private func setupSubviews() {
         firstNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupNameTextField(firstNameTextField)
+        firstNameTextField.setupForNameContent()
         
         lastNameTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupNameTextField(lastNameTextField)
+        lastNameTextField.setupForNameContent()
         
         phoneTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupPhoneTextField(phoneTextField)
+        phoneTextField.setupForPhoneContent()
 
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
     }
     
-    private func setupNameTextField(_ textField: UITextField) {
-        textField.textContentType = .name
-        textField.autocapitalizationType = .words
-        textField.autocorrectionType = .no
-        textField.keyboardType = .alphabet
-    }
-    
-    private func setupPhoneTextField(_ textField: UITextField) {
-        textField.textContentType = .telephoneNumber
-        textField.keyboardType = .phonePad
-        textField.returnKeyType = .done
-    }
 }
 
 extension SignUpBasicInfoView {

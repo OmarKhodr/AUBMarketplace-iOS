@@ -17,17 +17,21 @@ class SignUpCredentialsView: UIView {
     
     let companyTextField = BoldBorderlessTextField(placeholder: "Company")
     
-    let departmentButton = ListButton(title: "Department")
-    let majorButton = ListButton(title: "Major")
+    let majorListButton = ListButton(title: "Major")
     
     let continueButton = FilledButton(textColor: .white, backgroundColor: .systemGreen)
     
-    init(userType: UserType) {
+    let majorAction: (() -> Void)?
+    let continueAction: (() -> Void)?
+    
+    init(userType: UserType, majorAction: @escaping() -> Void, continueAction: @escaping() -> Void) {
         self.userType = userType
+        self.majorAction = majorAction
+        self.continueAction = continueAction
         super.init(frame: .zero)
         setupSubviews()
         setupConstraints()
-//        setupTargets()
+        setupTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -40,54 +44,34 @@ class SignUpCredentialsView: UIView {
 extension SignUpCredentialsView {
     private func setupSubviews() {
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupEmailTextField(emailTextField)
+        emailTextField.setupForEmailContent()
         
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupPasswordTextField(passwordTextField)
+        passwordTextField.setupForNewPasswordContent()
         
         repeatPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupPasswordTextField(repeatPasswordTextField)
+        repeatPasswordTextField.setupForNewPasswordContent()
         
         companyTextField.translatesAutoresizingMaskIntoConstraints = false
-        setupCompanyTextField(companyTextField)
+        companyTextField.setupForCompanyContent()
         
-        departmentButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        majorButton.translatesAutoresizingMaskIntoConstraints = false
+        majorListButton.translatesAutoresizingMaskIntoConstraints = false
         
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.setTitle((userType == .company ? "Continue" : "Finish"), for: .normal)
-    }
-    
-    private func setupCompanyTextField(_ textField: UITextField) {
-        textField.textContentType = .organizationName
-        textField.autocapitalizationType = .words
-        textField.autocorrectionType = .no
-        textField.keyboardType = .alphabet
-        textField.adjustsFontSizeToFitWidth = true;
-        textField.minimumFontSize = 10.0; //Optionally specify min size
-    }
-    
-    private func setupEmailTextField(_ textField: UITextField) {
-        textField.textContentType = .emailAddress
-        textField.keyboardType = .emailAddress
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.adjustsFontSizeToFitWidth = true;
-        textField.minimumFontSize = 10.0; //Optionally specify min size
-    }
-    
-    private func setupPasswordTextField(_ textField: UITextField) {
-        textField.textContentType = .newPassword
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.isSecureTextEntry = true
+        continueButton.setTitle(("Continue"), for: .normal)
+        
+        if userType == .company {
+            majorListButton.isHidden = true
+        } else {
+            companyTextField.isHidden = true
+        }
     }
 }
 
+//MARK: - Constraints Setup
 extension SignUpCredentialsView {
     private func setupConstraints() {
-        let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, repeatPasswordTextField, departmentButton, majorButton])
+        let stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, repeatPasswordTextField, companyTextField, majorListButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -105,5 +89,21 @@ extension SignUpCredentialsView {
             continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -291-20),
             continueButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
+    }
+}
+
+//MARK: - Target Setup
+extension SignUpCredentialsView {
+    private func setupTargets() {
+        majorListButton.addTarget(self, action: #selector(didTapMajorListButton), for: .touchUpInside)
+        continueButton.addTarget(self, action: #selector(didTapContinueButton), for: .touchUpInside)
+    }
+    
+    @objc private func didTapMajorListButton() {
+        majorAction?()
+    }
+    
+    @objc private func didTapContinueButton() {
+        continueAction?()
     }
 }

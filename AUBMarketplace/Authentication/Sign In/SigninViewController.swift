@@ -53,8 +53,8 @@ extension SigninViewController {
         passwordTextField.isSecureTextEntry = true
         
         //TESTING
-        emailTextField.text = "ohk04@mail.aub.edu"
-        passwordTextField.text = "Arsena123"
+        emailTextField.text = "mtm12@mail.aub.edu"
+        passwordTextField.text = "Hello.123"
         
         signInButton.setTitle("Sign In", for: .normal)
         signInButton.backgroundColor = .systemGreen
@@ -116,17 +116,18 @@ extension SigninViewController {
 extension SigninViewController {
     
     //networking version
-//    @objc func didTapSignIn() {
-//        if let userEmail = emailTextField.text, let userPassword = passwordTextField.text {
-//            authenticator.authenticate(email: userEmail, password: userPassword)
-//        } else {
-//            print("Email or password fields not filled!")
-//        }
-//    }
-    
-    @objc private func didTapSignIn() {
-        self.performSegue(withIdentifier: "authenticate", sender: self)
+    @objc func didTapSignIn() {
+        if let userEmail = emailTextField.text, let userPassword = passwordTextField.text {
+            authenticator.authenticate(email: userEmail, password: userPassword)
+        } else {
+            print("Email or password fields not filled!")
+        }
     }
+
+    // TESTING VERSION (no networking)
+//    @objc private func didTapSignIn() {
+//        self.performSegue(withIdentifier: "authenticate", sender: self)
+//    }
     
     @objc private func didTapCreateAccount() {
         self.performSegue(withIdentifier: "signup", sender: self)
@@ -144,6 +145,7 @@ extension SigninViewController: AuthenticationManagerDelegate {
     func didAuthenticate(_ manager: AuthenticationManager, token: String) {
         print("Authentication Successful!")
         DispatchQueue.main.async {
+            print("token: \(token)")
             self.defaults.set(token, forKey: "token")
             self.performSegue(withIdentifier: "authenticate", sender: self)
         }
