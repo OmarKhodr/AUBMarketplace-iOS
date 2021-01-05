@@ -16,6 +16,8 @@ class ProductsFeedViewController: UIViewController {
     var currentSnapshot: NSDiffableDataSourceSnapshot
         <ProductCollection, Product>! = nil
     static let titleElementKind = "title-element-kind"
+    
+    let reloadDataLock = NSLock()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +51,8 @@ extension ProductsFeedViewController {
     }
     
     @objc private func searchTapped() {
-        print("Search Tapped!")
+        let searchVC = SearchViewController(type: .products)
+        show(searchVC, sender: self)
     }
     
     private func configureViews() {
@@ -150,7 +153,6 @@ extension ProductsFeedViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseIdentifier, for: indexPath) as? T else {
             fatalError("Unable to dequeue \(cellType)")
         }
-
         cell.configure(with: product)
         return cell
     }
@@ -162,6 +164,7 @@ extension ProductsFeedViewController {
     }
     
     private func reloadData() {
+        
         currentSnapshot = NSDiffableDataSourceSnapshot
             <ProductCollection, Product>()
         
@@ -178,6 +181,11 @@ extension ProductsFeedViewController {
         registerCells()
         
         dataSource = UICollectionViewDiffableDataSource<ProductCollection, Product>(collectionView: collectionView) { collectionView, indexPath, product in
+            
+//            if (product.title == "Inde410 book") {
+//                print("Here: \(indexPath.section) \(indexPath.row)")
+//            }
+            
             switch self.productController.collections[indexPath.section].sectionType {
             case .categories:
                 return self.configure(SmallTableCell.self, with: product, for: indexPath)
@@ -209,12 +217,13 @@ extension ProductsFeedViewController {
 extension ProductsFeedViewController {
     
     private func fetchProducts() {
-        ProductManager.shared.fetchFeedProducts(section: .foryou, completion: insertFetchedProducts(_:section:))
-        ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
+//        ProductManager.shared.fetchFeedProducts(section: .foryou, completion: insertFetchedProducts(_:section:))
+//        ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
         ProductManager.shared.fetchFeedProducts(section: .recent, completion: insertFetchedProducts(_:section:))
     }
     
     private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
+        
         var sectionTitle = ""
         
         switch section {
@@ -231,14 +240,15 @@ extension ProductsFeedViewController {
         let collection = ProductCollection(title: sectionTitle, sectionType: section, products: products)
         productController.collections.append(collection)
         
-        // sort array according to the section order
-        productController.collections.sort { (productA, productB) -> Bool in
-            productA.sectionType.rawValue < productB.sectionType.rawValue
-        }
+//        // sort array according to the section order
+//        productController.collections.sort { (productA, productB) -> Bool in
+//            productA.sectionType.rawValue < productB.sectionType.rawValue
+//        }
         
         DispatchQueue.main.async {
             self.reloadData()
         }
+        
     }
     
 }
@@ -251,6 +261,12 @@ extension ProductsFeedViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = dataSource.itemIdentifier(for: indexPath)!
+        
+        if product.title == "Books" {
+            reloadData()
+            return
+        }
+        
         if product.isCategory {
             let categoryVC = ProductsListViewController(category: product.title)
             show(categoryVC, sender: self)

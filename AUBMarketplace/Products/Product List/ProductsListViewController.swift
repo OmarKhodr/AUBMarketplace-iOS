@@ -9,14 +9,15 @@ import UIKit
 
 class ProductsListViewController: UIViewController {
     
-    let category: String
+    enum ListType {
+        case category
+        case query
+    }
     
-    var products: [Product] = [
-        Product(title: "Dive Into Design Patterns - Alexander Shvets"),
-        Product(title: "Casio fx-991EX (Scientific)"),
-        Product(title: "EECE 332 Notes"),
-        Product(title: "Introduction to Algorithms (CLRS)")
-    ]
+    let listType: ListType
+    var inputString: String
+    
+    var products: [Product] = []
     
     enum Section: CaseIterable {
         case main
@@ -30,7 +31,14 @@ class ProductsListViewController: UIViewController {
     static let titleElementKind = "title-element-kind"
     
     init(category: String) {
-        self.category = category
+        self.inputString = category
+        self.listType = .category
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(query: String) {
+        self.inputString = query
+        self.listType = .query
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,8 +62,10 @@ class ProductsListViewController: UIViewController {
 //MARK: - View Setup
 extension ProductsListViewController {
     private func configureNavBar() {
-        navigationItem.title = category
-        navigationController?.navigationBar.prefersLargeTitles = true
+        if listType == .category {
+            navigationItem.title = inputString
+            navigationController?.navigationBar.prefersLargeTitles = true
+        }
     }
     
     private func configureViews() {
@@ -141,13 +151,20 @@ extension ProductsListViewController {
 //MARK: - Networking Setup
 extension ProductsListViewController {
     
-    private func fetchProducts() {
-        ProductManager.shared.fetchProductCategory(category: category, completion: didFetchProducts)
+    public func fetchProducts() {
+        if listType == .category {
+            ProductManager.shared.fetchProductCategory(category: inputString, completion: didFetchProducts(products:))
+        } else if listType == .query && inputString != "" {
+            ProductManager.shared.fetchProductQuery(query: inputString, completion: didFetchProducts(products:))
+        }
     }
     
     private func didFetchProducts(products: [Product]) {
-        self.products.append(contentsOf: products)
-        reloadData()
+        self.products = products
+        
+        DispatchQueue.main.async {
+            self.reloadData()
+        }
     }
     
 }

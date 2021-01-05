@@ -1,5 +1,5 @@
 //
-//  ServicesFeedViewController.swift
+//  ServicesListViewController.swift
 //  AUBMarketplace
 //
 //  Created by Omar Khodr on 12/22/20.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ServicesFeedViewController: UIViewController {
+class ServicesListViewController: UIViewController {
     
     let tableView = UITableView()
     
@@ -33,7 +33,7 @@ class ServicesFeedViewController: UIViewController {
 }
 
 //MARK: - Navigation Item Seutp
-extension ServicesFeedViewController {
+extension ServicesListViewController {
     private func setupNavItem() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Services Feed"
@@ -56,7 +56,7 @@ extension ServicesFeedViewController {
 }
 
 //MARK: - Subviews Setup
-extension ServicesFeedViewController {
+extension ServicesListViewController {
     
     private func setupViews() {
         setupTableView()
@@ -72,7 +72,7 @@ extension ServicesFeedViewController {
 }
 
 //MARK: - Constraints Setup
-extension ServicesFeedViewController {
+extension ServicesListViewController {
     private func setupConstraints() {
         view.addSubview(tableView)
         tableView.fillSuperview()
@@ -80,7 +80,7 @@ extension ServicesFeedViewController {
 }
 
 //MARK: - Data Source Setup
-extension ServicesFeedViewController: UITableViewDataSource {
+extension ServicesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return services.count
     }
@@ -95,7 +95,7 @@ extension ServicesFeedViewController: UITableViewDataSource {
 }
 
 //MARK: - Delegate Setup
-extension ServicesFeedViewController: UITableViewDelegate {
+extension ServicesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedService = Service() // production: let service = services[indexPath.row]
         let detailVC = ServiceDetailViewController(service: selectedService)
@@ -104,7 +104,7 @@ extension ServicesFeedViewController: UITableViewDelegate {
 }
 
 //MARK: - Networking Setup
-extension ServicesFeedViewController {
+extension ServicesListViewController {
     private func fetchServices() {
         ServiceManager.shared.fetchFeedServices(completion: didFetchServices(services:))
     }
