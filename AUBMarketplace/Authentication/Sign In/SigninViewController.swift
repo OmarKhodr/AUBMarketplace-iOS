@@ -22,9 +22,15 @@ class SigninViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
         authenticator.delegate = self
         setupViews()
         setupLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
 }
@@ -143,11 +149,12 @@ extension SigninViewController: AuthenticationManagerDelegate {
     }
     
     func didAuthenticate(_ manager: AuthenticationManager, token: String) {
-        print("Authentication Successful!")
         DispatchQueue.main.async {
-            print("token: \(token)")
             self.defaults.set(token, forKey: "token")
-            self.performSegue(withIdentifier: "authenticate", sender: self)
+            
+            let mainTabBar = MainTabBarController()
+            mainTabBar.modalPresentationStyle = .fullScreen
+            self.present(mainTabBar, animated: true, completion: nil)
         }
     }
 }

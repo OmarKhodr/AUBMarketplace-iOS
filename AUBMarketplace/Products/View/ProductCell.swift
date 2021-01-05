@@ -30,14 +30,14 @@ class ProductCell: UICollectionViewCell, SelfConfiguringProductCell {
         titleLabel.text = product.title
         categoryLabel.text = product.category
         
-        if let firstUrlString = product.imageUrls.first, let firstUrl = NSURL(string: firstUrlString) {
-            ProductImageCache.publicCache.load(url: firstUrl, product: product) { (product, image) in
-                if let image = image {
-                    print("\(product.title): \(firstUrlString)")
-                    self.imageView.image = image
-                }
-            }
-        }
+//        if let firstUrlString = product.imageUrls.first, let firstUrl = NSURL(string: firstUrlString) {
+//            ProductImageCache.publicCache.load(url: firstUrl, product: product) { (product, image) in
+//                if let image = image {
+//                    print("\(product.title): \(firstUrlString)")
+//                    self.imageView.image = image
+//                }
+//            }
+//        }
     }
     
 }

@@ -8,16 +8,15 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
     
     override func loadView() {
         view = OnboardingView(createAccountAction: didTapCreateAccount, signInAction: didTapSignIn)
         view.backgroundColor = .systemBackground
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
 }
@@ -25,12 +24,12 @@ class OnboardingViewController: UIViewController {
 //MARK: - Action Setup
 extension OnboardingViewController {
     private func didTapCreateAccount() {
-        print("Tapped Create!")
         let basicInfoVC = SignUpBasicInfoViewController()
         show(basicInfoVC, sender: self)
     }
     
     private func didTapSignIn() {
-        print("Tapped Sign In!")
+        let signInVC = SigninViewController()
+        show(signInVC, sender: self)
     }
 }
