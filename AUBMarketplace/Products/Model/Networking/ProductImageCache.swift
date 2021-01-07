@@ -54,9 +54,6 @@ public class ProductImageCache {
                 }
                 return
             }
-            DispatchQueue.main.async {
-                completion(product, image)
-            }
         }.resume()
     }
         

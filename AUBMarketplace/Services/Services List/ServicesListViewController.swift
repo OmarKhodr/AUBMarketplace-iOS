@@ -32,6 +32,7 @@ class ServicesListViewController: UIViewController {
 
 }
 
+
 //MARK: - Navigation Item Seutp
 extension ServicesListViewController {
     private func setupNavItem() {
@@ -55,6 +56,7 @@ extension ServicesListViewController {
     }
 }
 
+
 //MARK: - Subviews Setup
 extension ServicesListViewController {
     
@@ -67,9 +69,11 @@ extension ServicesListViewController {
         tableView.register(ServiceCell.self, forCellReuseIdentifier: ServiceCell.reuseIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.tableFooterView = UIView()
     }
     
 }
+
 
 //MARK: - Constraints Setup
 extension ServicesListViewController {
@@ -79,6 +83,7 @@ extension ServicesListViewController {
     }
 }
 
+
 //MARK: - Data Source Setup
 extension ServicesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -87,21 +92,23 @@ extension ServicesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ServiceCell.reuseIdentifier, for: indexPath) as! ServiceCell
-        cell.configure(with: Service())
+        cell.configure(with: services[indexPath.row])
         return cell
     }
     
     
 }
 
+
 //MARK: - Delegate Setup
 extension ServicesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedService = Service() // production: let service = services[indexPath.row]
+        let selectedService = services[indexPath.row]
         let detailVC = ServiceDetailViewController(service: selectedService)
         show(detailVC, sender: self)
     }
 }
+
 
 //MARK: - Networking Setup
 extension ServicesListViewController {
@@ -110,6 +117,7 @@ extension ServicesListViewController {
     }
     
     private func didFetchServices(services: [Service]) {
-        
+        self.services = services
+        tableView.reloadData()
     }
 }

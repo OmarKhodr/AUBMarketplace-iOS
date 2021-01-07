@@ -33,6 +33,11 @@ class SigninViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
 }
 
 //MARK: - View setup methods
@@ -55,7 +60,6 @@ extension SigninViewController {
         passwordTextField.textColor = .label
         passwordTextField.textContentType = .password
         passwordTextField.autocapitalizationType = .none
-        #warning("TODO: passwordTextField.passwordRules")
         passwordTextField.isSecureTextEntry = true
         
         //TESTING
@@ -153,8 +157,9 @@ extension SigninViewController: AuthenticationManagerDelegate {
             self.defaults.set(token, forKey: "token")
             
             let mainTabBar = MainTabBarController()
-            mainTabBar.modalPresentationStyle = .fullScreen
-            self.present(mainTabBar, animated: true, completion: nil)
+            self.show(mainTabBar, sender: self)
+//            mainTabBar.modalPresentationStyle = .fullScreen
+//            self.present(mainTabBar, animated: true, completion: nil)
         }
     }
 }

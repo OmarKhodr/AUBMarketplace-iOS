@@ -39,9 +39,11 @@ extension ServiceManager {
                 if let safeData = data {
                     print(String(data: safeData, encoding: .utf8)!)
                     //build model by parsing JSON data and adding location string, then pass that model to the delegate
-//                    if let products = self.buildFeedModel(data: safeData) {
-//                        completion(products, section)
-//                    }
+                    if let services = self.buildDataModel(data: safeData) {
+                        DispatchQueue.main.async {
+                            completion(services)
+                        }
+                    }
                 }
             }
             //4. Starting the task (it says resume() but it actually just starts it)
@@ -49,18 +51,33 @@ extension ServiceManager {
         }
     }
     
-//    private func buildFeedModel(data: Foundation.Data) -> [Service]? {
-//        let decoder = JSONDecoder()
-//        do {
-//            let decodedData = try decoder.decode(ProductsData.self, from: data)
-//            var products: [Product] = []
-//            for prodData in decodedData.data {
-//                products.append(Product(data: prodData))
-//            }
-//            return products
-//        } catch {
-//            print(error)
-//            return nil
-//        }
-//    }
+    private func buildDataModel(data: Foundation.Data) -> [Service]? {
+        let decoder = JSONDecoder()
+        do {
+            let decodedData = try decoder.decode(ServicesData.self, from: data)
+            var services: [Service] = []
+            for serviceData in decodedData.data {
+                services.append(Service(data: serviceData))
+            }
+            return services
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    private func buildArrayModel(data: Foundation.Data) -> [Service]? {
+        let decoder = JSONDecoder()
+        do {
+            let decodedData = try decoder.decode([ServiceData].self, from: data)
+            var services: [Service] = []
+            for serviceData in decodedData{
+                services.append(Service(data: serviceData))
+            }
+            return services
+        } catch {
+            print(error)
+            return nil
+        }
+    }
 }

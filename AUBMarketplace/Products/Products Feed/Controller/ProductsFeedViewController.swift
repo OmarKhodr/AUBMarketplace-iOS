@@ -27,10 +27,12 @@ class ProductsFeedViewController: UIViewController {
         configureConstraints()
         configureDataSource()
         configureDelegate()
+        configureRefreshControl()
         fetchProducts()
     }
     
 }
+
 
 //MARK: - View Setup
 extension ProductsFeedViewController {
@@ -47,12 +49,13 @@ extension ProductsFeedViewController {
     }
     
     @objc private func addTapped() {
-        print("Add Tapped!")
+        let addVC = AddProductViewController()
+        present(UINavigationController(rootViewController: addVC), animated: true, completion: nil)
     }
     
     @objc private func searchTapped() {
         let searchVC = SearchViewController(type: .products)
-        show(searchVC, sender: self)
+        present(UINavigationController(rootViewController: searchVC), animated: true, completion: nil)
     }
     
     private func configureViews() {
@@ -72,6 +75,7 @@ extension ProductsFeedViewController {
         collectionView.fillSuperview()
     }
 }
+
 
 //MARK: - Collection View Compositional Layout
 extension ProductsFeedViewController {
@@ -175,6 +179,8 @@ extension ProductsFeedViewController {
         }
         
         dataSource.apply(currentSnapshot, animatingDifferences: true)
+        
+        stopRefreshControl()
     }
     
     private func configureDataSource() {
@@ -213,37 +219,49 @@ extension ProductsFeedViewController {
     
 }
 
+
 //MARK: - Networking Setup
 extension ProductsFeedViewController {
     
     private func fetchProducts() {
-//        ProductManager.shared.fetchFeedProducts(section: .foryou, completion: insertFetchedProducts(_:section:))
-//        ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
+        ProductManager.shared.fetchFeedProducts(section: .foryou, completion: insertFetchedProducts(_:section:))
+        ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
         ProductManager.shared.fetchFeedProducts(section: .recent, completion: insertFetchedProducts(_:section:))
     }
     
+//    private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
+//
+//        var sectionTitle = ""
+//
+//        switch section {
+//        case .foryou:
+//            sectionTitle = "For You"
+//        case .hottest:
+//            sectionTitle = "Hottest"
+//        case .categories:
+//            sectionTitle = "Categories"
+//        case .recent:
+//            sectionTitle = "Recently Viewed"
+//        }
+//
+//        let collection = ProductCollection(title: sectionTitle, sectionType: section, products: products)
+//        productController.collections.append(collection)
+//
+////        // sort array according to the section order
+////        productController.collections.sort { (productA, productB) -> Bool in
+////            productA.sectionType.rawValue < productB.sectionType.rawValue
+////        }
+//
+//        DispatchQueue.main.async {
+//            self.reloadData()
+//        }
+//
+//    }
+
     private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
         
-        var sectionTitle = ""
-        
-        switch section {
-        case .foryou:
-            sectionTitle = "For You"
-        case .hottest:
-            sectionTitle = "Hottest"
-        case .categories:
-            sectionTitle = "Categories"
-        case .recent:
-            sectionTitle = "Recently Viewed"
-        }
-        
-        let collection = ProductCollection(title: sectionTitle, sectionType: section, products: products)
-        productController.collections.append(collection)
-        
-//        // sort array according to the section order
-//        productController.collections.sort { (productA, productB) -> Bool in
-//            productA.sectionType.rawValue < productB.sectionType.rawValue
-//        }
+        let ind = section.rawValue
+        productController.collections[ind].products = products
         
         DispatchQueue.main.async {
             self.reloadData()
@@ -252,6 +270,7 @@ extension ProductsFeedViewController {
     }
     
 }
+
 
 //MARK: - Colletion View Delegate Setup
 extension ProductsFeedViewController: UICollectionViewDelegate {
@@ -262,11 +281,6 @@ extension ProductsFeedViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = dataSource.itemIdentifier(for: indexPath)!
         
-        if product.title == "Books" {
-            reloadData()
-            return
-        }
-        
         if product.isCategory {
             let categoryVC = ProductsListViewController(category: product.title)
             show(categoryVC, sender: self)
@@ -274,6 +288,30 @@ extension ProductsFeedViewController: UICollectionViewDelegate {
             let detailVC = ProductDetailViewController()
             detailVC.product = product
             show(detailVC, sender: self)
+        }
+    }
+}
+
+
+//MARK: - Refresh Control
+extension ProductsFeedViewController {
+    func configureRefreshControl () {
+       // Add the refresh control to your UIScrollView object.
+       collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action:
+                                          #selector(handleRefreshControl),
+                                          for: .valueChanged)
+    }
+        
+    @objc func handleRefreshControl() {
+        reloadData()
+    }
+    
+    func stopRefreshControl() {
+        DispatchQueue.main.async {
+            if let refreshControl = self.collectionView.refreshControl, refreshControl.isRefreshing {
+                refreshControl.endRefreshing()
+            }
         }
     }
 }

@@ -78,7 +78,7 @@ extension SignUpCredentialsViewController {
             "CSE",
             "CCE",
             "ECE",
-            "CS"
+            "ECON"
         ]
         let optionListVC = OptionListViewController(options: options,
                                                     selectedRow: selectedMajorIndex,

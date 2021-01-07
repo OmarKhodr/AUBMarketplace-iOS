@@ -47,6 +47,17 @@ class SearchViewController: UIViewController {
 extension SearchViewController {
     private func setupNavItem() {
         navigationItem.title = "Search"
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(didTapDone))
+        doneButton.tintColor = .systemGreen
+        
+        navigationItem.leftBarButtonItem = doneButton
+    }
+    
+    @objc private func didTapDone() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func setupSubviews() {

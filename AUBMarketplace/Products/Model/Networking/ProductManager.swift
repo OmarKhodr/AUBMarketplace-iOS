@@ -16,7 +16,7 @@ class ProductManager {
 }
 
 
-//MARK: - Network Calls
+//MARK: - GET Requests
 extension ProductManager {
     func fetchFeedProducts(section: ProductSection,
                            completion: @escaping ([Product], ProductSection) -> Void) {
@@ -29,32 +29,32 @@ extension ProductManager {
             urlString += "/latest"
         }
         
-        //1. Creating URL from string
+        // Creating URL from string
         if let url = URL(string: urlString) {
-            //2. Creating URLSession
+            // Creating URLSession
             let session = URLSession(configuration: .default)
             
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             
-            //3. Adding task to the session with the newly created URL along with completion handler method to handle success or failure of GET request
+            // Adding task to the session with the newly created URL along with completion handler method to handle success or failure of GET request
             let task = session.dataTask(with: request) { (data, response, error) in
                 if let error = error {
                     print(error)
                     return
                 }
                 if let safeData = data {
-//                    print(String(data: safeData, encoding: .utf8)!)
                     //build model by parsing JSON data and adding location string, then pass that model to the delegate
                     if let products = self.buildDataModel(data: safeData) {
                         completion(products, section)
                     }
                 }
             }
-            //4. Starting the task (it says resume() but it actually just starts it)
+            // Starting the task (it says resume() but it actually just starts it)
             task.resume()
         }
+        
     }
     
     func fetchProductCategory(category: String, completion: @escaping([Product]) -> Void) {
@@ -62,7 +62,11 @@ extension ProductManager {
         var urlString = "\(K.url)/api/search/products/category/"
         
         let categoryMap: [String: String] = [
-            "Books" : "Book"
+            "Books" : "Book",
+            "Course Notes" : "Notes",
+            "Supplies" : "Supplies",
+            "Electronics" : "Electronics",
+            "Others" : "Other"
         ]
         
         urlString += categoryMap[category]!
@@ -96,7 +100,6 @@ extension ProductManager {
     }
     
     func fetchProductQuery(query: String, completion: @escaping([Product]) -> Void) {
-        print("query: \(query)")
         let token = defaults.string(forKey: "token")!
         let urlString = "\(K.url)/api/search/products"
         
@@ -126,6 +129,46 @@ extension ProductManager {
                     //build model by parsing JSON data and adding location string, then pass that model to the delegate
                     if let products = self.buildArrayModel(data: safeData) {
                         completion(products)
+                    }
+                }
+            }
+            //4. Starting the task (it says resume() but it actually just starts it)
+            task.resume()
+        }
+    }
+}
+
+
+//MARK: - POST Requests
+extension ProductManager {
+    func postProduct(_ newProduct: NewProductData, completion: @escaping () -> Void) {
+        let token = defaults.string(forKey: "token")!
+        let urlString = "\(K.url)/api/products"
+        
+        //1. Creating URL from string
+        if let url = URL(string: urlString) {
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            
+            print(String(data: buildProductData(newProduct: newProduct)!, encoding: .utf8)!)
+            request.httpBody = buildProductData(newProduct: newProduct)!
+            
+            //2. Creating URLSession
+            let session = URLSession(configuration: .default)
+            
+            //3. Adding task to the session with the newly created URL along with completion handler method to handle success or failure of GET request
+            let task = session.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    print(error)
+                    return
+                }
+                if let safeData = data {
+                    print(String(data: safeData, encoding: .utf8)!)
+                    //build model by parsing JSON data and adding location string, then pass that model to the delegate
+                    DispatchQueue.main.async {
+                        completion()
                     }
                 }
             }
@@ -167,5 +210,19 @@ extension ProductManager {
             return nil
         }
     }
-    
+}
+
+
+//MARK: - Data Building
+extension ProductManager {
+    private func buildProductData(newProduct: NewProductData) -> Foundation.Data? {
+        let encoder = JSONEncoder()
+        do {
+            let encodedData = try encoder.encode(newProduct)
+            return encodedData
+        } catch {
+            print(error)
+            return nil
+        }
+    }
 }

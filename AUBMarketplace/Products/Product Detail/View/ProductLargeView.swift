@@ -17,7 +17,10 @@ class ProductLargeView: UIView {
     let buyButton = UIButton()
     let wishlistButton = UIButton()
     
-    init(with product: Product) {
+    let buyAction: () -> Void
+    
+    init(with product: Product, buyAction: @escaping () -> Void) {
+        self.buyAction = buyAction
         super.init(frame: .zero)
         
         setupViews()
@@ -131,6 +134,12 @@ extension ProductLargeView {
         detailButton.startAnimatingPressActions()
         buyButton.startAnimatingPressActions()
         wishlistButton.startAnimatingPressActions()
+        
+        buyButton.addTarget(self, action: #selector(didTapBuy), for: .touchUpInside)
+    }
+    
+    @objc private func didTapBuy() {
+        buyAction()
     }
     
     func configure(with product: Product) {
@@ -144,6 +153,7 @@ extension ProductLargeView {
         
         nameLabel.text = product.title
         sellerButton.setTitle(product.seller, for: .normal)
+        
         switch product.status {
         case .available:
             buyButton.setTitle("BUY | \(product.currency)\(product.price!)", for: .normal)

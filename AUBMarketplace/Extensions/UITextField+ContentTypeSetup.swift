@@ -49,8 +49,14 @@ extension UITextField {
         autocapitalizationType = .words
         autocorrectionType = .no
         keyboardType = .alphabet
-        adjustsFontSizeToFitWidth = true;
-        minimumFontSize = 10.0; //Optionally specify min size
+        adjustsFontSizeToFitWidth = true
+        minimumFontSize = 10.0 //Optionally specify min size
+    }
+    
+    func setupForPriceContent() {
+        keyboardType = .numberPad
+        adjustsFontSizeToFitWidth = true
+        minimumFontSize = 10.0
     }
     
 }

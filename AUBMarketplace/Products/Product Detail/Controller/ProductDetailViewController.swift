@@ -27,13 +27,15 @@ class ProductDetailViewController: UIViewController {
     
 }
 
+
+//MARK: - Subviews + Constraints
 extension ProductDetailViewController {
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
         scrollView = UIScrollView()
         contentView = UIView()
-        largeView = ProductLargeView(with: product)
+        largeView = ProductLargeView(with: product, buyAction: didTapBuy)
         descriptionView = ProductDescriptionView(with: product)
     }
     
@@ -103,5 +105,23 @@ extension ProductDetailViewController {
         ])
 
         scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
+}
+
+
+//MARK: - Actions
+extension ProductDetailViewController {
+    private func didTapBuy() {
+        let alert = UIAlertController(title: "Request Complete!", message: "Your are now the potential buyer for this product! You can contact the seller using their contact information on their profile page.", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: didTapOkay(sender:)))
+
+        self.present(alert, animated: true)
+    }
+    
+    private func didTapOkay(sender: UIAlertAction) {
+        product.status = .saleInProgress
+        largeView.buyButton.setTitle("SALE IN PROGRESS", for: .disabled)
+        largeView.buyButton.isEnabled = false
     }
 }

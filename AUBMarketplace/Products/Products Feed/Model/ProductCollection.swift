@@ -11,7 +11,7 @@ struct ProductCollection: Hashable {
     
     let title: String
     let sectionType: ProductSection
-    let products: [Product]
+    var products: [Product]
     
     let identifier = UUID()
     func hash(into hasher: inout Hasher) {

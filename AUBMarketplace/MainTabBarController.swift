@@ -28,7 +28,11 @@ class MainTabBarController: UITabBarController {
         let servicesIcon = UITabBarItem(title: "Services", image: UIImage(systemName: "figure.wave"), tag: 1)
         servicesNavController.tabBarItem = servicesIcon
         
-        self.viewControllers = [productsNavController, servicesNavController]
+        let meNavController = UINavigationController(rootViewController: ProfileViewController())
+        let meIcon = UITabBarItem(title: "Me", image: UIImage(systemName: "person.crop.circle"), tag: 2)
+        meNavController.tabBarItem = meIcon
+        
+        self.viewControllers = [productsNavController, servicesNavController, meNavController]
     }
 
 }

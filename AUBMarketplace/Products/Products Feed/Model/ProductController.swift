@@ -50,13 +50,16 @@ extension ProductController {
     
     func generateCategories() {
         collections = [
+            ProductCollection(title: "For You", sectionType: .foryou, products: []),
+            ProductCollection(title: "Hottest", sectionType: .hottest, products: []),
             ProductCollection(title: "Categories", sectionType: .categories, products: [
                 Product(title: "Books"),
                 Product(title: "Course Notes"),
                 Product(title: "Supplies"),
                 Product(title: "Electronics"),
                 Product(title: "Others")
-            ])
+            ]),
+            ProductCollection(title: "Recently Viewed", sectionType: .recent, products: [])
         ]
     }
 }
