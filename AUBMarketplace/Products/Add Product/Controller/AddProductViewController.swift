@@ -22,6 +22,11 @@ class AddProductViewController: UIViewController {
         setupSubviews()
         setupConstraints()
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        addProductView.titleTextField.becomeFirstResponder()
+    }
 
 }
 
@@ -47,6 +52,9 @@ extension AddProductViewController {
         
         addProductView = AddProductView(currencyAction: didTapCurrency, categoryAction: didTapCategory)
         addProductView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addProductView.titleTextField.delegate = self
+        addProductView.priceTextField.delegate = self
     }
 }
 
@@ -102,11 +110,14 @@ extension AddProductViewController {
             let price = Int(addProductView.priceTextField.text ?? "NO"),
             let category = addProductView.categoryListButton.chosenOptionLabel.text {
             
-            let newProduct = NewProductData(name: name,
-                                            category: category,
-                                            description: "Here goes the description.",
-                                            majors: [],
-                                            price: price)
+            let newProduct: [String: Any] = [
+                "name": name,
+                "category": category,
+                "description": "Here goes the description.",
+                "majors": [String](),
+                "price": price
+                
+            ]
             ProductManager.shared.postProduct(newProduct, completion: didPostProduct)
             
         }
@@ -132,10 +143,10 @@ extension AddProductViewController {
     private func didTapCategory() {
         let options = [
             "Book",
-            "Course Notes",
+            "Notes",
             "Supplies",
             "Electronics",
-            "Others"
+            "Other"
         ]
         let optionsVC = OptionListViewController(options: options, selectedRow: selectedCategoryIndex, callBack: backFromCategoryOptions)
         show(optionsVC, sender: self)
@@ -144,5 +155,14 @@ extension AddProductViewController {
     private func backFromCategoryOptions(selectedCategory: String?, selectedIndex: Int?) {
         selectedCategoryIndex = selectedIndex
         addProductView.categoryListButton.chosenOptionLabel.text = selectedCategoryIndex == nil ? "None" : selectedCategory
+    }
+}
+
+
+//MARK: - UITextField Delegate
+extension AddProductViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

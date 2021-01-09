@@ -16,6 +16,8 @@ class SignUpCredentialsViewController: UIViewController {
     
     var selectedMajorIndex: Int? = nil
     
+    let defaults = UserDefaults.standard
+    
     init(basicUser: BasicUser, userType: UserType) {
         self.basicUser = basicUser
         self.userType = userType
@@ -23,7 +25,9 @@ class SignUpCredentialsViewController: UIViewController {
     }
     
     override func loadView() {
-        view = SignUpCredentialsView(userType: userType, majorAction: majorAction, continueAction: continueAction)
+        view = SignUpCredentialsView(userType: userType,
+                                     majorAction: majorAction,
+                                     continueAction: continueAction)
         view.backgroundColor = .systemBackground
     }
     
@@ -92,6 +96,28 @@ extension SignUpCredentialsViewController {
     }
     
     private func continueAction() {
-        print("Continue/Finish tapped!")
+        if let email = credentialsView.emailTextField.text,
+           let password = credentialsView.passwordTextField.text,
+           password == credentialsView.repeatPasswordTextField.text,
+           let major = credentialsView.majorListButton.chosenOptionLabel.text {
+            
+            let info = UserInfo(name: "\(basicUser.firstName) \(basicUser.lastName)",
+                                email: email,
+                                major: major,
+                                number: basicUser.phoneNumber,
+                                interests: ["programming"],
+                                password: password)
+            UserManager.shared.createUser(info: info, completion: didCreateUser(token:))
+        }
+    }
+    
+    private func didCreateUser(token: UserToken) {
+        print("Created User!")
+        self.defaults.set(token.token, forKey: "token")
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        let mainTabBar = MainTabBarController()
+        self.show(mainTabBar, sender: self)
     }
 }

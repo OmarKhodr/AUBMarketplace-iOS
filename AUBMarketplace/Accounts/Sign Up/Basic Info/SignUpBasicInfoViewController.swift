@@ -10,15 +10,16 @@ import UIKit
 class SignUpBasicInfoViewController: UIViewController {
     
     var basicInfoView: SignUpBasicInfoView!
+    var textFieldsDelegate: SequentialTextFieldDelegate!
     
     override func loadView() {
-        view = SignUpBasicInfoView(continueAction: didTapContinueButton)
+        basicInfoView = SignUpBasicInfoView(continueAction: didTapContinueButton)
+        view = basicInfoView
         view.backgroundColor = .systemBackground
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        basicInfoView = view as? SignUpBasicInfoView
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handle(keyboardShowNotification:)),
                                                name: UIResponder.keyboardDidShowNotification,
@@ -28,14 +29,16 @@ class SignUpBasicInfoViewController: UIViewController {
     }
     
     private func setupTextFields() {
-        basicInfoView.firstNameTextField.delegate = self
-        basicInfoView.firstNameTextField.tag = 1
-        
-        basicInfoView.lastNameTextField.delegate = self
-        basicInfoView.lastNameTextField.tag = 2
-        
-        basicInfoView.phoneTextField.delegate = self
-        basicInfoView.phoneTextField.tag = 3
+        textFieldsDelegate = SequentialTextFieldDelegate(textFields: [
+            basicInfoView.firstNameTextField,
+            basicInfoView.lastNameTextField,
+            basicInfoView.phoneTextField,
+        ], finishButton: basicInfoView.continueButton)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -44,7 +47,6 @@ class SignUpBasicInfoViewController: UIViewController {
     }
 
 //    private func moveButtonUp(keyboardHeight: CGFloat) {
-//        let basicInfoView = view as! SignUpBasicInfoView
 //        NSLayoutConstraint.deactivate([
 //            basicInfoView.continueButton.bottomAnchor.constraint(equalTo: basicInfoView.safeAreaLayoutGuide.bottomAnchor, constant: -20)
 //        ])

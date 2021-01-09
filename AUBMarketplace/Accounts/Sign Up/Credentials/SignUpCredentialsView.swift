@@ -24,7 +24,10 @@ class SignUpCredentialsView: UIView {
     let majorAction: (() -> Void)?
     let continueAction: (() -> Void)?
     
-    init(userType: UserType, majorAction: @escaping() -> Void, continueAction: @escaping() -> Void) {
+    init(userType: UserType,
+         majorAction: @escaping() -> Void,
+         continueAction: @escaping() -> Void) {
+        
         self.userType = userType
         self.majorAction = majorAction
         self.continueAction = continueAction
@@ -32,6 +35,7 @@ class SignUpCredentialsView: UIView {
         setupSubviews()
         setupConstraints()
         setupTargets()
+        
     }
     
     required init?(coder: NSCoder) {

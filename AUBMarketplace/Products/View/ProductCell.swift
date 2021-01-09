@@ -35,10 +35,12 @@ class ProductCell: UICollectionViewCell, SelfConfiguringProductCell {
                 if let image = image {
                     print("\(product.title): \(firstUrlString)")
                     self.imageView.image = image
+                    self.imageView.layer.borderWidth = 0
                 }
             }
         } else {
             imageView.image = nil
+            self.imageView.layer.borderWidth = 2
         }
     }
     
@@ -93,11 +95,11 @@ extension ProductCell {
         categoryLabel.font = .preferredFont(forTextStyle: .body)
         categoryLabel.adjustsFontForContentSizeCategory = true
 
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.borderColor = UIColor.systemGray5.cgColor
-        imageView.layer.borderWidth = 1
-        imageView.layer.cornerRadius = 4
-        imageView.backgroundColor = .systemGray5
+        imageView.layer.borderWidth = 2
+        imageView.rounded(cornerRadius: 8.0)
+        imageView.backgroundColor = .systemGray6
 
         let spacing = CGFloat(10)
         NSLayoutConstraint.activate([

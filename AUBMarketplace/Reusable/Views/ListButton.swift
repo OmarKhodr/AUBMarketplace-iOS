@@ -31,7 +31,7 @@ class ListButton: UIControl {
 extension ListButton {
     
     private func setupSubviews() {
-        backgroundColor = .systemGray6
+        backgroundColor = .secondarySystemBackground
         rounded(cornerRadius: 8)
         heightAnchor.constraint(equalToConstant: 50).isActive = true
         

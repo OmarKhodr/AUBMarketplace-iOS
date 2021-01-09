@@ -18,7 +18,7 @@ class FilledButton: UIButton {
         setBackgroundColor(color: backgroundColor, forState: .normal)
         rounded(cornerRadius: 8)
         
-        heightAnchor.constraint(equalToConstant: 50).isActive = true
+        heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
     
     required init?(coder: NSCoder) {

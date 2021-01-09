@@ -228,35 +228,6 @@ extension ProductsFeedViewController {
         ProductManager.shared.fetchFeedProducts(section: .hottest, completion: insertFetchedProducts(_:section:))
         ProductManager.shared.fetchFeedProducts(section: .recent, completion: insertFetchedProducts(_:section:))
     }
-    
-//    private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
-//
-//        var sectionTitle = ""
-//
-//        switch section {
-//        case .foryou:
-//            sectionTitle = "For You"
-//        case .hottest:
-//            sectionTitle = "Hottest"
-//        case .categories:
-//            sectionTitle = "Categories"
-//        case .recent:
-//            sectionTitle = "Recently Viewed"
-//        }
-//
-//        let collection = ProductCollection(title: sectionTitle, sectionType: section, products: products)
-//        productController.collections.append(collection)
-//
-////        // sort array according to the section order
-////        productController.collections.sort { (productA, productB) -> Bool in
-////            productA.sectionType.rawValue < productB.sectionType.rawValue
-////        }
-//
-//        DispatchQueue.main.async {
-//            self.reloadData()
-//        }
-//
-//    }
 
     private func insertFetchedProducts(_ products: [Product], section: ProductSection) {
         

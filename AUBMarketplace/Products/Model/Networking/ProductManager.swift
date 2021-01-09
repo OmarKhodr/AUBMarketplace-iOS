@@ -10,8 +10,9 @@ import Foundation
 class ProductManager {
     
     private init() { }
-    static let shared = ProductManager()
-    let defaults = UserDefaults.standard
+    public static let shared = ProductManager()
+    
+    private let defaults = UserDefaults.standard
     
 }
 
@@ -141,7 +142,7 @@ extension ProductManager {
 
 //MARK: - POST Requests
 extension ProductManager {
-    func postProduct(_ newProduct: NewProductData, completion: @escaping () -> Void) {
+    func postProduct(_ body: [String: Any], completion: @escaping () -> Void) {
         let token = defaults.string(forKey: "token")!
         let urlString = "\(K.url)/api/products"
         
@@ -149,11 +150,17 @@ extension ProductManager {
         if let url = URL(string: urlString) {
             
             var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             
-            print(String(data: buildProductData(newProduct: newProduct)!, encoding: .utf8)!)
-            request.httpBody = buildProductData(newProduct: newProduct)!
+            request.httpMethod = "POST"
+            let bodyData = try? JSONSerialization.data(
+                withJSONObject: body,
+                options: []
+            )
+            request.httpBody = bodyData
+            
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Accept")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             
             //2. Creating URLSession
             let session = URLSession(configuration: .default)

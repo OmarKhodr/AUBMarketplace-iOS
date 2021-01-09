@@ -37,13 +37,13 @@ extension OnboardingView {
     private func setupSubviews() {
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.text = "Welcome to AUBMarketplace!"
-        welcomeLabel.setDynamicFont(forTextStyle: .largeTitle)
+        welcomeLabel.setDynamicFont(forTextStyle: .largeTitle, weight: .bold)
         welcomeLabel.numberOfLines = 0
         
         createAccountButton.translatesAutoresizingMaskIntoConstraints = false
         createAccountButton.setTitle("Create Account", for: .normal)
         createAccountButton.titleLabel?.setDynamicFont(forTextStyle: .body, weight: .medium)
-        createAccountButton.setTitleColor(.white, for: .normal)
+        createAccountButton.setTitleColor(.systemBackground, for: .normal)
         createAccountButton.setBackgroundColor(color: .systemGreen, forState: .normal)
         createAccountButton.rounded(cornerRadius: 8)
         
@@ -56,8 +56,8 @@ extension OnboardingView {
     }
     
     private func setupConstraints() {
-        createAccountButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        signInButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        createAccountButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        signInButton.heightAnchor.constraint(equalToConstant: 55).isActive = true
         
         let buttonStackView = UIStackView(arrangedSubviews: [createAccountButton, signInButton])
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
