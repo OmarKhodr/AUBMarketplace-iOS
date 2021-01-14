@@ -13,7 +13,9 @@ class SignUpBasicInfoView: UIView {
     let firstNameTextField = BoldBorderlessTextField(placeholder: "First Name")
     let lastNameTextField = BoldBorderlessTextField(placeholder: "Last Name")
     let phoneTextField = BoldBorderlessTextField(placeholder: "Phone")
-    var continueButton = FilledButton(textColor: .white, backgroundColor: .systemGreen)
+    var continueButton = FilledButton(textColor: .systemBackground, backgroundColor: .systemGreen)
+    
+    var buttonBottomConsraint: NSLayoutConstraint!
     
     var continueAction: (() -> Void)?
     
@@ -44,6 +46,7 @@ extension SignUpBasicInfoView {
 
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.setTitle("Continue", for: .normal)
+        continueButton.isEnabled = false
     }
     
 }
@@ -59,13 +62,15 @@ extension SignUpBasicInfoView {
         addSubview(stackView)
         addSubview(continueButton)
         
+        buttonBottomConsraint = continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -40)
+        
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
             stackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
             stackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
             continueButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            continueButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -291-20),
+            buttonBottomConsraint,
             continueButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
     }

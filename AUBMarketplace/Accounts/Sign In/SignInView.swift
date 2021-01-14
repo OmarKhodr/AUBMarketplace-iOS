@@ -51,7 +51,7 @@ extension SignInView {
         signInButton.translatesAutoresizingMaskIntoConstraints = false
         signInButton.setTitle("Sign In", for: .normal)
         signInButton.rounded(cornerRadius: 16)
-        signInButton.isEnabled = false
+        signInButton.isEnabled = emailTextField.textField.text != "" && passwordTextField.textField.text != ""
     }
 }
 

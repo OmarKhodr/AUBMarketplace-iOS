@@ -12,14 +12,14 @@ public class ProductImageCache {
     public static let publicCache = ProductImageCache()
     var placeholderImage = UIImage(systemName: "rectangle")!
     private let cachedImages = NSCache<NSURL, UIImage>()
-    private var loadingResponses = [NSURL: [(Product, UIImage?) -> Swift.Void]]()
+    private var loadingResponses = [NSURL: [(Product?, UIImage?) -> Swift.Void]]()
     
     public final func image(url: NSURL) -> UIImage? {
         return cachedImages.object(forKey: url)
     }
     /// - Tag: cache
     // Returns the cached image if available, otherwise asynchronously loads and caches it.
-    final func load(url: NSURL, product: Product, completion: @escaping (Product, UIImage?) -> Swift.Void) {
+    final func load(url: NSURL, product: Product?, completion: @escaping (Product?, UIImage?) -> Swift.Void) {
         // Check for a cached image.
         if let cachedImage = image(url: url) {
             DispatchQueue.main.async {

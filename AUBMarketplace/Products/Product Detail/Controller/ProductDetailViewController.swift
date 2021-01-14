@@ -9,20 +9,39 @@ import UIKit
 
 class ProductDetailViewController: UIViewController {
     
+    let product: Product
+    
     var scrollView: UIScrollView! = nil
     var contentView: UIView! = nil // Content view containing all views to layout in scroll view
+    var imagesVC: ProductImagesViewController!
     var largeView: ProductLargeView! = nil
     var descriptionView: ProductDescriptionView! = nil
     
-    var product: Product!
+    init(with product: Product) {
+        self.product = product
+        super.init(nibName: nil, bundle: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
-        
         setupViews()
         setupConstraints()
         
+    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        navigationController?.setNavigationBarHidden(true, animated: true)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        navigationController?.setNavigationBarHidden(false, animated: true)
+//    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 }
@@ -35,6 +54,10 @@ extension ProductDetailViewController {
         
         scrollView = UIScrollView()
         contentView = UIView()
+        
+        imagesVC = ProductImagesViewController(with: product)
+        imagesVC.view.translatesAutoresizingMaskIntoConstraints = false
+        
         largeView = ProductLargeView(with: product, buyAction: didTapBuy)
         descriptionView = ProductDescriptionView(with: product)
     }
@@ -42,6 +65,10 @@ extension ProductDetailViewController {
     private func setupConstraints() {
         
         // Add subviews to content view
+        addChild(imagesVC)
+        contentView.addSubview(imagesVC.view)
+        imagesVC.didMove(toParent: self)
+        
         contentView.addSubview(largeView)
         largeView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(descriptionView)
@@ -55,7 +82,13 @@ extension ProductDetailViewController {
 
         // Define constraints of subviews within content view
         NSLayoutConstraint.activate([
-            largeView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            
+            imagesVC.view.heightAnchor.constraint(equalToConstant: 250),
+            imagesVC.view.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imagesVC.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imagesVC.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
+            largeView.topAnchor.constraint(equalTo: imagesVC.view.bottomAnchor, constant: 20),
             largeView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             largeView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
@@ -104,7 +137,7 @@ extension ProductDetailViewController {
             scrollView.frameLayoutGuide.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+//        scrollView.frameLayoutGuide.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
 }
 

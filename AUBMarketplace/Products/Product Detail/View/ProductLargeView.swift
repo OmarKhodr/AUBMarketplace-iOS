@@ -8,14 +8,13 @@
 import UIKit
 
 class ProductLargeView: UIView {
-
-    let imageView = UIImageView()
+    
     let nameLabel = UILabel()
     let sellerButton = UIButton()
     
     let detailButton = UIButton()
     let buyButton = UIButton()
-    let wishlistButton = UIButton()
+    let saveButton = UIButton()
     
     let buyAction: () -> Void
     
@@ -38,14 +37,6 @@ class ProductLargeView: UIView {
 //MARK: - View and Constraint Setup
 extension ProductLargeView {
     private func setupViews() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        // Add drop shadow
-        imageView.layer.shadowColor = UIColor.black.cgColor
-        imageView.layer.shadowOpacity = 0.5
-        imageView.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        imageView.layer.shadowRadius = 15
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         // custom extension to set dynamic font with weight
         nameLabel.setDynamicFont(forTextStyle: .title3, weight: .bold)
@@ -71,26 +62,26 @@ extension ProductLargeView {
         buyButton.setBackgroundColor(color: .systemGreen, forState: .normal)
         buyButton.rounded(cornerRadius: 25)
         
-        wishlistButton.translatesAutoresizingMaskIntoConstraints = false
-        wishlistButton.setTitle("WISHLIST", for: .normal)
-        wishlistButton.titleLabel?.setDynamicFont(forTextStyle: .body, weight: .bold)
-        wishlistButton.setTitleColor(.label, for: .normal)
-        wishlistButton.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
-        wishlistButton.tintColor = .label
-        wishlistButton.setBackgroundColor(color: .systemBackground, forState: .normal)
-        wishlistButton.layer.borderWidth = 2
-        wishlistButton.layer.borderColor = UIColor.label.cgColor
-        wishlistButton.rounded(cornerRadius: 25)
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.setTitle("WISHLIST", for: .normal)
+        saveButton.titleLabel?.setDynamicFont(forTextStyle: .body, weight: .bold)
+        saveButton.setTitleColor(.label, for: .normal)
+        saveButton.setImage(UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(weight: .bold)), for: .normal)
+        saveButton.tintColor = .label
+        saveButton.setBackgroundColor(color: .systemBackground, forState: .normal)
+        saveButton.layer.borderWidth = 2
+        saveButton.layer.borderColor = UIColor.label.cgColor
+        saveButton.rounded(cornerRadius: 25)
         
     }
     
     private func setupConstraints() {
         buyButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        wishlistButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         let buttonsView = UIView()
         
-        let buttonStackView = UIStackView(arrangedSubviews: [buyButton, wishlistButton])
+        let buttonStackView = UIStackView(arrangedSubviews: [buyButton, saveButton])
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.axis = .vertical
         buttonStackView.spacing = 10
@@ -111,18 +102,18 @@ extension ProductLargeView {
         ])
         
         
-        let stackView = UIStackView(arrangedSubviews: [imageView, nameLabel, sellerButton, buttonsView])
+        let stackView = UIStackView(arrangedSubviews: [
+            nameLabel,
+            sellerButton,
+            buttonsView
+        ])
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.spacing = 10
-        stackView.setCustomSpacing(30, after: imageView)
         stackView.setCustomSpacing(20, after: sellerButton)
         
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 375).isActive = true
-        imageView.heightAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
         
         stackView.fillSuperview()
     }
@@ -133,7 +124,7 @@ extension ProductLargeView {
     private func setupActions() {
         detailButton.startAnimatingPressActions()
         buyButton.startAnimatingPressActions()
-        wishlistButton.startAnimatingPressActions()
+        saveButton.startAnimatingPressActions()
         
         buyButton.addTarget(self, action: #selector(didTapBuy), for: .touchUpInside)
     }
@@ -143,14 +134,6 @@ extension ProductLargeView {
     }
     
     func configure(with product: Product) {
-        if let firstUrlString = product.imageUrls.first, let firstUrl = NSURL(string: firstUrlString) {
-            ProductImageCache.publicCache.load(url: firstUrl, product: product) { (product, image) in
-                if let image = image {
-                    self.imageView.image = image
-                }
-            }
-        }
-        
         nameLabel.text = product.title
         sellerButton.setTitle(product.seller, for: .normal)
         

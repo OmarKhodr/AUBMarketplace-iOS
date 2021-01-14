@@ -20,6 +20,7 @@ class SignUpBasicInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Subscribe to the keyboardShow notification to modify the continue button's bottomAnchor constraint
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handle(keyboardShowNotification:)),
                                                name: UIResponder.keyboardDidShowNotification,
@@ -34,28 +35,14 @@ class SignUpBasicInfoViewController: UIViewController {
             basicInfoView.lastNameTextField,
             basicInfoView.phoneTextField,
         ], finishButton: basicInfoView.continueButton)
+        
+        basicInfoView.firstNameTextField.becomeFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        basicInfoView.firstNameTextField.becomeFirstResponder()
-    }
-
-//    private func moveButtonUp(keyboardHeight: CGFloat) {
-//        NSLayoutConstraint.deactivate([
-//            basicInfoView.continueButton.bottomAnchor.constraint(equalTo: basicInfoView.safeAreaLayoutGuide.bottomAnchor, constant: -20)
-//        ])
-//        print(basicInfoView.constraints)
-//        NSLayoutConstraint.activate([
-//            basicInfoView.continueButton.bottomAnchor.constraint(equalTo: basicInfoView.bottomAnchor, constant: -keyboardHeight-20)
-//        ])
-//    }
-    
     
     /*
     1. Simply print Keyboard show notification to make sure that this method is being called when the keyboard is shown.
@@ -64,16 +51,26 @@ class SignUpBasicInfoViewController: UIViewController {
      */
     @objc
     private func handle(keyboardShowNotification notification: Notification) {
-        // 1
-        print("Keyboard show notification")
 
-        // 2
         if let userInfo = notification.userInfo,
-            // 3
             let keyboardRectangle = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            print(keyboardRectangle.height)
-//            moveButtonUp(keyboardHeight: keyboardRectangle.height)
+            
+            moveButtonUp(keyboardHeight: keyboardRectangle.height)
+            
         }
+    }
+    
+    private func moveButtonUp(keyboardHeight: CGFloat) {
+        basicInfoView.buttonBottomConsraint.constant = -keyboardHeight-20
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(5),
+                       initialSpringVelocity: CGFloat(10),
+                       options: [.curveEaseOut],
+                       animations: {
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
     }
 
 }

@@ -177,8 +177,7 @@ extension ProductsListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let product = dataSource.itemIdentifier(for: indexPath)!
-        let detailVC = ProductDetailViewController()
-        detailVC.product = product
+        let detailVC = ProductDetailViewController(with: product)
         show(detailVC, sender: self)
     }
 }

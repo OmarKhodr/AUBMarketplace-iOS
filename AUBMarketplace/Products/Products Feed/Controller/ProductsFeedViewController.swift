@@ -256,8 +256,7 @@ extension ProductsFeedViewController: UICollectionViewDelegate {
             let categoryVC = ProductsListViewController(category: product.title)
             show(categoryVC, sender: self)
         } else {
-            let detailVC = ProductDetailViewController()
-            detailVC.product = product
+            let detailVC = ProductDetailViewController(with: product)
             show(detailVC, sender: self)
         }
     }
