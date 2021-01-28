@@ -26,6 +26,8 @@ class ProductImagesViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray6
+        setupPageIndicator()
+        
         dataSource = self
         delegate = nil
 
@@ -36,6 +38,12 @@ class ProductImagesViewController: UIPageViewController {
         }
 
         setViewControllers([pages[0]], direction: .forward, animated: false, completion: nil)
+    }
+    
+    private func setupPageIndicator() {
+        let proxy = UIPageControl.appearance()
+        proxy.pageIndicatorTintColor = UIColor.label.withAlphaComponent(0.5)
+        proxy.currentPageIndicatorTintColor = .label
     }
 
 }

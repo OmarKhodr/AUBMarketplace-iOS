@@ -19,8 +19,8 @@ class ProfilePictureView: UIView {
         self.user = user
         super.init(frame: .zero)
         setupSubviews()
-        configureData()
         setupConstraints()
+        configureData()
     }
     
     required init?(coder: NSCoder) {
@@ -29,27 +29,15 @@ class ProfilePictureView: UIView {
     
     private func setupSubviews() {
         profilePictureView.translatesAutoresizingMaskIntoConstraints = false
-        profilePictureView.image = UIImage(systemName: "person.crop.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 40))
+        profilePictureView.image = UIImage(systemName: "person.crop.circle.fill")
         profilePictureView.tintColor = .label
         profilePictureView.contentMode = .scaleAspectFit
         
         typeLabel.translatesAutoresizingMaskIntoConstraints = false
         typeLabel.textColor = .systemBackground
-        typeLabel.setDynamicFont(forTextStyle: .caption1, weight: .bold)
+        typeLabel.setDynamicFont(forTextStyle: .caption1, font: .boldSystemFont(ofSize: 10))
         
         typeBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    private func configureData() {
-        let color: UIColor = user.type == .student ? .systemRed : .systemBlue
-        
-        profilePictureView.layer.borderColor = color.cgColor
-        profilePictureView.layer.borderWidth = 7.0
-        profilePictureView.rounded(cornerRadius: profilePictureView.bounds.height/2)
-        
-        typeLabel.text = user.type.rawValue
-        
-        typeBackgroundView.backgroundColor = color
     }
     
     private func setupConstraints() {
@@ -61,11 +49,34 @@ class ProfilePictureView: UIView {
             typeLabel.trailingAnchor.constraint(equalTo: typeBackgroundView.trailingAnchor, constant: -5)
         ])
         
-        addSubview(typeBackgroundView)
         addSubview(profilePictureView)
+        addSubview(typeBackgroundView)
+        
         
         NSLayoutConstraint.activate([
+            typeBackgroundView.topAnchor.constraint(equalTo: topAnchor),
+            typeBackgroundView.centerXAnchor.constraint(equalTo: profilePictureView.centerXAnchor),
             
+            profilePictureView.heightAnchor.constraint(equalToConstant: 70),
+            profilePictureView.widthAnchor.constraint(equalToConstant: 70),
+            profilePictureView.topAnchor.constraint(equalTo: typeBackgroundView.topAnchor, constant: 5),
+            profilePictureView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            profilePictureView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            profilePictureView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+    
+    private func configureData() {
+        let color: UIColor = user.type == .student ? .systemRed : .systemBlue
+        
+        profilePictureView.layer.borderColor = color.cgColor
+        profilePictureView.layer.borderWidth = 5.0
+        print("picture height: \(profilePictureView.bounds.height)")
+        profilePictureView.rounded(cornerRadius: 35)
+        
+        typeLabel.text = user.type.rawValue
+        
+        typeBackgroundView.backgroundColor = color
+        typeBackgroundView.rounded(cornerRadius: 5)
     }
 }

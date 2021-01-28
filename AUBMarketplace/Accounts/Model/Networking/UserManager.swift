@@ -88,7 +88,7 @@ extension UserManager {
         }
     }
     
-    func fetchUser(with id: String, completion: @escaping (User) -> Void) {
+    func fetchUser(id: String, completion: @escaping (User) -> Void) {
         
     }
     
@@ -161,4 +161,5 @@ extension UserManager {
             return nil
         }
     }
+    
 }

@@ -11,11 +11,12 @@ class ProductDetailViewController: UIViewController {
     
     let product: Product
     
-    var scrollView: UIScrollView! = nil
-    var contentView: UIView! = nil // Content view containing all views to layout in scroll view
+    var scrollView: UIScrollView!
+    var contentView: UIView!// Content view containing all views to layout in scroll view
     var imagesVC: ProductImagesViewController!
-    var largeView: ProductLargeView! = nil
-    var descriptionView: ProductDescriptionView! = nil
+    var titleView: ProductDetailTitleView!
+    var actionView: ProductDetailActionView!
+    var descriptionView: ProductDescriptionView!
     
     init(with product: Product) {
         self.product = product
@@ -58,8 +59,14 @@ extension ProductDetailViewController {
         imagesVC = ProductImagesViewController(with: product)
         imagesVC.view.translatesAutoresizingMaskIntoConstraints = false
         
-        largeView = ProductLargeView(with: product, buyAction: didTapBuy)
+        titleView = ProductDetailTitleView(with: product)
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        actionView = ProductDetailActionView()
+        actionView.translatesAutoresizingMaskIntoConstraints = false
+        
         descriptionView = ProductDescriptionView(with: product)
+        descriptionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func setupConstraints() {
@@ -69,17 +76,21 @@ extension ProductDetailViewController {
         contentView.addSubview(imagesVC.view)
         imagesVC.didMove(toParent: self)
         
-        contentView.addSubview(largeView)
-        largeView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(titleView)
+        contentView.addSubview(actionView)
         contentView.addSubview(descriptionView)
-        descriptionView.translatesAutoresizingMaskIntoConstraints = false
         
         // Add separator
         let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
         separator.backgroundColor = .quaternaryLabel
         contentView.addSubview(separator)
-        separator.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        let separator2 = UIView()
+        separator2.translatesAutoresizingMaskIntoConstraints = false
+        separator2.backgroundColor = .quaternaryLabel
+        contentView.addSubview(separator2)
+        
         // Define constraints of subviews within content view
         NSLayoutConstraint.activate([
             
@@ -88,16 +99,25 @@ extension ProductDetailViewController {
             imagesVC.view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imagesVC.view.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            largeView.topAnchor.constraint(equalTo: imagesVC.view.bottomAnchor, constant: 20),
-            largeView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            largeView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            titleView.topAnchor.constraint(equalTo: imagesVC.view.bottomAnchor, constant: 20),
+            titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
             separator.heightAnchor.constraint(equalToConstant: 1),
-            separator.topAnchor.constraint(equalTo: largeView.bottomAnchor, constant: 30),
+            separator.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 20),
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             
-            descriptionView.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 30),
+            actionView.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 20),
+            actionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            actionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            separator2.heightAnchor.constraint(equalToConstant: 1),
+            separator2.topAnchor.constraint(equalTo: actionView.bottomAnchor, constant: 20),
+            separator2.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            separator2.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            descriptionView.topAnchor.constraint(equalTo: separator2.bottomAnchor, constant: 20),
             descriptionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             descriptionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
             descriptionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20)
@@ -144,17 +164,17 @@ extension ProductDetailViewController {
 
 //MARK: - Actions
 extension ProductDetailViewController {
-    private func didTapBuy() {
-        let alert = UIAlertController(title: "Request Complete!", message: "Your are now the potential buyer for this product! You can contact the seller using their contact information on their profile page.", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: didTapOkay(sender:)))
-
-        self.present(alert, animated: true)
-    }
-    
-    private func didTapOkay(sender: UIAlertAction) {
-        product.status = .saleInProgress
-        largeView.buyButton.setTitle("SALE IN PROGRESS", for: .disabled)
-        largeView.buyButton.isEnabled = false
-    }
+//    private func didTapBuy() {
+//        let alert = UIAlertController(title: "Request Complete!", message: "Your are now the potential buyer for this product! You can contact the seller using their contact information on their profile page.", preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: didTapOkay(sender:)))
+//
+//        self.present(alert, animated: true)
+//    }
+//
+//    private func didTapOkay(sender: UIAlertAction) {
+//        product.status = .saleInProgress
+//        largeView.buyButton.setTitle("SALE IN PROGRESS", for: .disabled)
+//        largeView.buyButton.isEnabled = false
+//    }
 }

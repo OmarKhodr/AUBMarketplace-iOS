@@ -50,8 +50,11 @@
 		237794162593AC4500C5499F /* ServiceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237794152593AC4500C5499F /* ServiceDetailViewController.swift */; };
 		2377942F2594B29200C5499F /* UIViewController+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2377942E2594B29100C5499F /* UIViewController+Children.swift */; };
 		239339B8255DDB7E0087D5CF /* ProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239339B7255DDB7E0087D5CF /* ProductsData.swift */; };
+		2396CC0C25B30E9C00E8C229 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2396CC0B25B30E9C00E8C229 /* TestViewController.swift */; };
+		2396CC1125B3403B00E8C229 /* RatingStarsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2396CC1025B3403B00E8C229 /* RatingStarsView.swift */; };
 		239A692825AEE8A10074CFFB /* SmallProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239A692725AEE8A10074CFFB /* SmallProfileView.swift */; };
 		239A692E25AEEE4D0074CFFB /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239A692D25AEEE4D0074CFFB /* ProfilePictureView.swift */; };
+		239D3DEB25C2FFB80008684B /* ProductDetailActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239D3DEA25C2FFB80008684B /* ProductDetailActionView.swift */; };
 		23A8F01B25935AFC00FC872F /* ServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A8F01A25935AFC00FC872F /* ServiceCell.swift */; };
 		23A8F0322593679C00FC872F /* SelfConfiguringServiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A8F0312593679C00FC872F /* SelfConfiguringServiceCell.swift */; };
 		23A8F035259367CD00FC872F /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A8F034259367CD00FC872F /* Service.swift */; };
@@ -69,6 +72,7 @@
 		23C4E48D259C8D9200C665A2 /* ListButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C4E48C259C8D9200C665A2 /* ListButton.swift */; };
 		23C4E491259CB08100C665A2 /* OptionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C4E490259CB08100C665A2 /* OptionListViewController.swift */; };
 		23CA6580255D5E2B00E60A03 /* SmallTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CA657F255D5E2B00E60A03 /* SmallTableCell.swift */; };
+		23D936DB25B9E2F8002CF68D /* ProductDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D936DA25B9E2F8002CF68D /* ProductDetailTitleView.swift */; };
 		23DFCBCD255DD133003F9F8D /* ProductManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DFCBCC255DD133003F9F8D /* ProductManager.swift */; };
 		23DFCBD0255DD33F003F9F8D /* UserToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DFCBCF255DD33F003F9F8D /* UserToken.swift */; };
 		23E3FC9525A8B014008A4510 /* FilledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E3FC9425A8B014008A4510 /* FilledTextField.swift */; };
@@ -132,8 +136,11 @@
 		237794152593AC4500C5499F /* ServiceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailViewController.swift; sourceTree = "<group>"; };
 		2377942E2594B29100C5499F /* UIViewController+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Children.swift"; sourceTree = "<group>"; };
 		239339B7255DDB7E0087D5CF /* ProductsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsData.swift; sourceTree = "<group>"; };
+		2396CC0B25B30E9C00E8C229 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		2396CC1025B3403B00E8C229 /* RatingStarsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStarsView.swift; sourceTree = "<group>"; };
 		239A692725AEE8A10074CFFB /* SmallProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallProfileView.swift; sourceTree = "<group>"; };
 		239A692D25AEEE4D0074CFFB /* ProfilePictureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
+		239D3DEA25C2FFB80008684B /* ProductDetailActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailActionView.swift; sourceTree = "<group>"; };
 		23A8F01A25935AFC00FC872F /* ServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceCell.swift; sourceTree = "<group>"; };
 		23A8F0312593679C00FC872F /* SelfConfiguringServiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfiguringServiceCell.swift; sourceTree = "<group>"; };
 		23A8F034259367CD00FC872F /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
@@ -151,6 +158,7 @@
 		23C4E48C259C8D9200C665A2 /* ListButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListButton.swift; sourceTree = "<group>"; };
 		23C4E490259CB08100C665A2 /* OptionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionListViewController.swift; sourceTree = "<group>"; };
 		23CA657F255D5E2B00E60A03 /* SmallTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTableCell.swift; sourceTree = "<group>"; };
+		23D936DA25B9E2F8002CF68D /* ProductDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailTitleView.swift; sourceTree = "<group>"; };
 		23DFCBCC255DD133003F9F8D /* ProductManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductManager.swift; sourceTree = "<group>"; };
 		23DFCBCF255DD33F003F9F8D /* UserToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserToken.swift; sourceTree = "<group>"; };
 		23E3FC9425A8B014008A4510 /* FilledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledTextField.swift; sourceTree = "<group>"; };
@@ -281,6 +289,7 @@
 		2356FE3F25A23AC0005C439C /* Accounts */ = {
 			isa = PBXGroup;
 			children = (
+				2396CC0F25B3402A00E8C229 /* Rating Stars */,
 				236C5A6425A79B1C00F3E989 /* Model */,
 				239A692C25AEEE360074CFFB /* Profile Picture */,
 				239A692625AEE88A0074CFFB /* Small Profile */,
@@ -320,6 +329,7 @@
 			children = (
 				2357A6282541A151003E9595 /* AppDelegate.swift */,
 				2357A62A2541A152003E9595 /* SceneDelegate.swift */,
+				2396CC0B25B30E9C00E8C229 /* TestViewController.swift */,
 				2302B40D259E5E03009DDF2B /* MainTabBarController.swift */,
 				2369A0F52572EFD10013CC2F /* Reusable */,
 				2356FE3F25A23AC0005C439C /* Accounts */,
@@ -429,6 +439,14 @@
 			path = "Service Detail";
 			sourceTree = "<group>";
 		};
+		2396CC0F25B3402A00E8C229 /* Rating Stars */ = {
+			isa = PBXGroup;
+			children = (
+				2396CC1025B3403B00E8C229 /* RatingStarsView.swift */,
+			);
+			path = "Rating Stars";
+			sourceTree = "<group>";
+		};
 		239A692625AEE88A0074CFFB /* Small Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +533,8 @@
 			children = (
 				23FD230125645CCC00E8D8A1 /* ProductLargeView.swift */,
 				23F9EFF025655644002F3962 /* ProductDescriptionView.swift */,
+				23D936DA25B9E2F8002CF68D /* ProductDetailTitleView.swift */,
+				239D3DEA25C2FFB80008684B /* ProductDetailActionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -720,6 +740,7 @@
 				2356FE4125A23AE5005C439C /* User.swift in Sources */,
 				23FD22DB2563DD3300E8D8A1 /* SearchFieldView.swift in Sources */,
 				230CE745255C8CB00013C430 /* Product.swift in Sources */,
+				2396CC1125B3403B00E8C229 /* RatingStarsView.swift in Sources */,
 				23C4E483259BB61600C665A2 /* SignUpCredentialsViewController.swift in Sources */,
 				2356FE3225A21A51005C439C /* UITextField+ContentTypeSetup.swift in Sources */,
 				23500602259268BC00819B58 /* ServicesListViewController.swift in Sources */,
@@ -739,6 +760,7 @@
 				2302B413259F35AB009DDF2B /* ProductImageCache.swift in Sources */,
 				236C5A6125A777E300F3E989 /* NewProductData.swift in Sources */,
 				2359B3A7254F43EE00EA978B /* TitleSupplementaryView.swift in Sources */,
+				239D3DEB25C2FFB80008684B /* ProductDetailActionView.swift in Sources */,
 				232B8F9325AA3C0600BBB74C /* ProductImagesViewController.swift in Sources */,
 				23076A7325ACA8AE00F2430D /* ImageViewController.swift in Sources */,
 				2331855F2599D48F0060018F /* SignUpBasicInfoView.swift in Sources */,
@@ -759,6 +781,7 @@
 				23BCBA9725966C33002544AC /* ServiceDetailTitleView.swift in Sources */,
 				23FD23052564681C00E8D8A1 /* UILabel+DynamicFont.swift in Sources */,
 				239A692825AEE8A10074CFFB /* SmallProfileView.swift in Sources */,
+				2396CC0C25B30E9C00E8C229 /* TestViewController.swift in Sources */,
 				2302EA7125A5A4FF00420F4D /* ProductImageManager.swift in Sources */,
 				2357A62B2541A152003E9595 /* SceneDelegate.swift in Sources */,
 				23C4E477259B375A00C665A2 /* SignUpUserTypeView.swift in Sources */,
@@ -773,6 +796,7 @@
 				23E3FC9825A8B1A1008A4510 /* SignInView.swift in Sources */,
 				2302EA7525A60C6300420F4D /* ProfileViewController.swift in Sources */,
 				23FD230225645CCC00E8D8A1 /* ProductLargeView.swift in Sources */,
+				23D936DB25B9E2F8002CF68D /* ProductDetailTitleView.swift in Sources */,
 				2302EA7925A60C8900420F4D /* ProfileView.swift in Sources */,
 				23BC240C25A7AC01001A3EA5 /* UserInfo.swift in Sources */,
 				23F9EFE725652E8E002F3962 /* Button.swift in Sources */,

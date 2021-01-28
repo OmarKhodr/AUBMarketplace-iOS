@@ -21,6 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let onboardingVC = OnboardingViewController()
         window.rootViewController = UINavigationController(rootViewController: onboardingVC) // Your initial view controller.
+//        window.rootViewController = TestViewController()
         window.makeKeyAndVisible()
         self.window = window
     }
